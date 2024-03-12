@@ -1,0 +1,5 @@
+- 4 thuộc tính của OOP
++ Tính đóng gói: đảm bảo sự bảo mật, cũng như toàn vẹn của đối tượng.
++ Tính kế thừa: Lớp con có thể kế thừa lại lớp cha.
++ Tính đa hình: Khi có nhiều lớp con kế thừa lớp cha nhưng có những tính chất khác nhau cũng gọi là đa hình.
++ Tính trừu tượng: Tập trung cốt lõi cần thiết của đối tượng thay vì quan tâm sự phúc tạp bên trong.
