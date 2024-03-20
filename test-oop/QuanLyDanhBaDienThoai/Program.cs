@@ -2,6 +2,6 @@
 {
     static void Main(string[] args)
     {
-        DiemView.Menu();
+        DanhBaView.Menu();
     }
 }
