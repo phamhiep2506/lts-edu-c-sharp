@@ -183,7 +183,8 @@ values
 	(1, 1, 2, '2018-03-26', '11:00', '13:30', 100000, 1),
 	(2, 1, 3, '2018-03-27', '17:15', '19:15', 50000, 0),
 	(3, 2, 2, '2018-03-26', '20:30', '22:15', 100000, 1),
-	(4, 3, 1, '2018-04-01', '19:30', '21:15', 200000, 1)
+	(4, 3, 1, '2018-04-01', '19:30', '21:15', 200000, 1),
+	(5, 1, 2, NULL, NULL, NULL, 200000, 1)
 go
 
 -- Insert data chi_tiet_su_dung_dich_vu
@@ -204,7 +205,7 @@ go
 
 -- I
 -- I.1. Liệt kê MaDatPhong, MaDV, SoLuong của tất cả các dịch vụ có số lượng lớn hơn 3 và nhỏ hơn 10.
-select * from chi_tiet_su_dung_dich_vu
+select dat_phong_id, dich_vu_id, so_luong from chi_tiet_su_dung_dich_vu
 where so_luong >= 3 and so_luong <= 10
 go
 
@@ -213,7 +214,7 @@ update phong
 set gia_phong = gia_phong + 10000
 where so_khach_toi_da > 10
 go
-
+--
 select * from phong
 go
 
@@ -221,12 +222,12 @@ go
 delete from dat_phong
 where trang_thai_dat = 0
 go
-
-select * from dat_phong
-go
+-- Error: The DELETE statement conflicted with the REFERENCE constraint "fk_dat_phong_id". The conflict occurred in database "DatPhong", table "dbo.chi_tiet_su_dung_dich_vu", column 'dat_phong_id'.
+-- select * from dat_phong
+-- go
 
 -- II.4. Hiển thị TenKH của những khách hàng có tên bắt đầu là một trong các ký tự “H”, “N”, “M” và có độ dài tối đa là 20 ký tự.
-select * from khach_hang
+select ten_khach_hang from khach_hang
 where ten_khach_hang like 'H%' or ten_khach_hang like 'N%' or ten_khach_hang like 'M%'
 go
 
@@ -236,7 +237,7 @@ group by ten_khach_hang
 go
 
 -- II.6. Hiển thị MaDV, TenDV, DonViTinh, DonGia của những dịch vụ đi kèm có DonViTinh là “lon” và có DonGia lớn hơn 10,000 VNĐ hoặc những dịch vụ đi kèm có DonViTinh là “Cai” và có DonGia nhỏ hơn 5,000 VNĐ.
-select * from dich_vu_di_kem
+select dich_vu_id, ten_dich_vu, don_gia from dich_vu_di_kem
 where
 don_vi_tinh = 'lon' and don_gia > 10000
 or
@@ -244,12 +245,13 @@ don_vi_tinh = 'cai' and don_gia < 5000
 go
 
 -- II.7.  Hiển thị MaDatPhong, MaPhong, LoaiPhong, SoKhachToiDa, GiaPhong, MaKH, TenKH, SoDT, NgayDat, GioBatDau, GioKetThuc, MaDichVu, SoLuong, DonGia của những đơn đặt phòng có năm đặt phòng là “2016”, “2017” và đặt những phòng có giá phòng > 50,000 VNĐ/ 1 giờ
-select * from dat_phong
+select *
+from dat_phong
 inner join khach_hang on dat_phong.khach_hang_id = khach_hang.khach_hang_id
 inner join phong on dat_phong.phong_id = phong.phong_id
 inner join chi_tiet_su_dung_dich_vu on dat_phong.dat_phong_id = chi_tiet_su_dung_dich_vu.dat_phong_id
 inner join dich_vu_di_kem on chi_tiet_su_dung_dich_vu.dich_vu_id = dich_vu_di_kem.dich_vu_id
-where (year(ngay_dat) = 2016 or year(ngay_dat) = 2017) and gia_phong > 50000
+where year(ngay_dat) = 2018 and gia_phong > 50000
 go
 
 -- III. 8. Hiển thị MaDatPhong, MaPhong, LoaiPhong, GiaPhong, TenKH, NgayDat, TongTienHat, TongTienSuDungDichVu, TongTienThanhToan tương ứng với từng mã đặt phòng có trong bảng DAT_PHONG. Những đơn đặt phòng nào không sử dụng dịch vụ đi kèm thì cũng liệt kê thông tin của đơn đặt phòng đó ra.
@@ -260,10 +262,35 @@ select
 	phong.gia_phong,
 	khach_hang.ten_khach_hang,
 	dat_phong.ngay_dat,
-	datediff(hour, dat_phong.gio_bat_dau, dat_phong.gio_ket_thuc)
+	phong.gia_phong * datediff(hour, dat_phong.gio_bat_dau, dat_phong.gio_ket_thuc) as 'Tong tien dat',
+	chi_tiet_su_dung_dich_vu.so_luong * dich_vu_di_kem.don_gia as 'Tong tien su dung dich vu',
+	(phong.gia_phong * datediff(hour, dat_phong.gio_bat_dau, dat_phong.gio_ket_thuc)) + (chi_tiet_su_dung_dich_vu.so_luong * dich_vu_di_kem.don_gia) as 'Don gia tong tien thanh toan'
 from dat_phong
 inner join khach_hang on dat_phong.khach_hang_id = khach_hang.khach_hang_id
 inner join phong on dat_phong.phong_id = phong.phong_id
 inner join chi_tiet_su_dung_dich_vu on dat_phong.dat_phong_id = chi_tiet_su_dung_dich_vu.dat_phong_id
 inner join dich_vu_di_kem on chi_tiet_su_dung_dich_vu.dich_vu_id = dich_vu_di_kem.dich_vu_id
 go
+
+-- III. 9. Hiển thị MaKH, TenKH, DiaChi, SoDT của những khách hàng đã từng đặt phòng karaoke có địa chỉ ở “Hoa xuan”
+select
+	khach_hang.ten_khach_hang,
+	khach_hang.ten_khach_hang,
+	khach_hang.dia_chi,
+	khach_hang.so_dien_thoai
+from khach_hang
+inner join dat_phong on khach_hang.khach_hang_id = dat_phong.khach_hang_id
+where khach_hang.dia_chi = 'Hoa xuan'
+
+-- III. 10. Hiển thị MaPhong, LoaiPhong, SoKhachToiDa, GiaPhong, SoLanDat của những phòng được khách hàng đặt có số lần đặt lớn hơn 2 lần và trạng thái đặt là “Da dat”.
+select
+	dat_phong.phong_id,
+	phong.loai_phong,
+	phong.so_khach_toi_da,
+	phong.gia_phong,
+	count(dat_phong.phong_id) as 'So lan dat'
+from dat_phong
+inner join phong on dat_phong.phong_id = phong.phong_id
+where dat_phong.trang_thai_dat = 1
+group by dat_phong.phong_id, phong.loai_phong, phong.so_khach_toi_da, phong.gia_phong
+having count(dat_phong.phong_id) > 1
