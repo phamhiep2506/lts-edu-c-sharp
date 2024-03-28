@@ -1,7 +1,8 @@
 -- create database lts;
-use lts;
 drop table HocSinh;
 drop table Lop;
+
+use lts;
 create table HocSinh(
 	HocSinhID int identity(1,1) primary key,
 	LopID int,
@@ -11,6 +12,8 @@ create table HocSinh(
 	DiaChi varchar(50),
 	Email varchar(50)
 );
+select * from HocSinh
+go
 
 create table Lop(
 	LopID int identity(1,1) primary key,

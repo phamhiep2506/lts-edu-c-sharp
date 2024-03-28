@@ -17,8 +17,8 @@ values
 (2, "Pham Van B", 1, "2000-02-02", "CaoBang", "phamvanb@gmail.com"),
 (3, "BNam Van C", 1, "2000-03-03", "NinhBinh", "phamvanc@gmail.com"),
 (4, "Cham Van D", 1, "2000-04-04", "ThanhHoa", "phamvand@gmail.com"),
-(5, "Pham Van E", 1, "2005-06-05", "HaNam", "phamvane@gmail.com"),
-(6, "Tran Van F", 1, "2000-06-06", "NamDinh", "phamvanf@gmail.com"),
+(5, "Pham Van E", 1, "2005-06-05", "HaNam", NULL),
+(5, "Tran Van F", 1, "2000-06-06", "HaGiang", "phamvanf@gmail.com"),
 (7, "Tran Van I", 1, "2000-07-07", "NamDinh", "phamvani@gmail.com"),
 (7, "Pham Thi A", 0, "2000-08-08", "HaNoi", "phamthia@gmail.com")
 ;
@@ -51,3 +51,9 @@ values
 ;
 
 select SiSo, GiaoVienChuNhiem from Lop where SiSo > 30 and GiaoVienChuNhiem like "%Quynh%";
+select LopID, GioiTinh, DiaChi from HocSinh where DiaChi = "HaGiang" and GioiTinh = 1 and LopID = 5;
+select HoTen from HocSinh where Email is null;
+select * from HocSinh where year(NgaySinh) <> 2005;
+select * from HocSinh where HoTen like '%[^a-zA-Z]%';
+select * from HocSinh order by HocSinhID desc;
+select * from HocSinh order by LopID desc, day(NgaySinh);
