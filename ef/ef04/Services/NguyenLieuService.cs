@@ -31,4 +31,14 @@ public class NguyenLieuService : INguyenLieuService
         _context.Add(nguyenLieu);
         _context.SaveChanges();
     }
+
+    public int GetNguyenLieuId(string tenNguyenLieu)
+    {
+        int nguyenLieuId = _context
+            .nguyenLieus!
+            .Where(o => o.TenNguyenLieu == tenNguyenLieu)
+            .Select(o => o.NguyenLieuId)
+            .SingleOrDefault();
+        return nguyenLieuId;
+    }
 }
