@@ -8,17 +8,17 @@ public class NgayHocService : INgayHocService
 {
     private KhoaHocDbContext _context;
 
-    public NgayHocService(KhoaHocDbContext khoaHocDbContext)
+    public NgayHocService()
     {
-        _context = khoaHocDbContext;
+        _context = new KhoaHocDbContext();
     }
 
     public void ThemNgayHoc(NgayHocDto ngayHocDto)
     {
         NgayHoc ngayHoc = new NgayHoc();
 
-        int? khoaHocId = new KhoaHocService(_context).GetKhoaHocId(ngayHocDto.TenKhoaHoc);
-        if(khoaHocId != null) 
+        int? khoaHocId = new KhoaHocService().GetKhoaHocId(ngayHocDto.TenKhoaHoc);
+        if(khoaHocId != null)
         {
             ngayHoc.KhoaHocId = khoaHocId;
 

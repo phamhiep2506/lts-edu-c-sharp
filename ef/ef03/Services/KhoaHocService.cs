@@ -7,9 +7,10 @@ namespace ef03.Service;
 public class KhoaHocService : IKhoaHocService
 {
     private KhoaHocDbContext _context;
-    public KhoaHocService(KhoaHocDbContext khoaHocDbContext)
+
+    public KhoaHocService()
     {
-        _context = khoaHocDbContext;
+        _context = new KhoaHocDbContext();
     }
 
     public void ThemKhoaHoc(KhoaHocDto khoaHocDto)
@@ -35,5 +36,19 @@ public class KhoaHocService : IKhoaHocService
             .SingleOrDefault();
 
         return khoaHocId;
+    }
+
+    public void XoaKhoaHoc(string tenKhoaHoc)
+    {
+        KhoaHoc? khoaHoc = _context
+            .khoaHocs?
+            .Where(o => o.TenKhoaHoc == tenKhoaHoc)
+            .SingleOrDefault();
+
+        if(khoaHoc != null)
+        {
+            _context.Remove(khoaHoc);
+            _context.SaveChanges();
+        }
     }
 }

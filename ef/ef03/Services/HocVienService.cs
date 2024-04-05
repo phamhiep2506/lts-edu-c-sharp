@@ -7,6 +7,7 @@ namespace ef03.Service;
 public class HocVienService : IHocVienService
 {
     private KhoaHocDbContext _context;
+
     public HocVienService()
     {
         _context = new KhoaHocDbContext();
@@ -16,7 +17,7 @@ public class HocVienService : IHocVienService
     {
         HocVien hocVien = new HocVien();
         hocVien.HoTen = themHocVienDto.HoTen;
-        int getKhoaHocId = new KhoaHocService(_context).GetKhoaHocId(themHocVienDto.TenKhoaHoc);
+        int getKhoaHocId = new KhoaHocService().GetKhoaHocId(themHocVienDto.TenKhoaHoc);
         hocVien.KhoaHocId = getKhoaHocId;
 
         _context.Add(hocVien);
@@ -29,10 +30,10 @@ public class HocVienService : IHocVienService
             .hocViens?
             .Where(o => o.HoTen == suaHocVienDto.HoTen)
             .SingleOrDefault();
-        
+
         if(hocVien != null)
         {
-            hocVien.KhoaHocId = new KhoaHocService(_context).GetKhoaHocId(suaHocVienDto.TenKhoaHoc);
+            hocVien.KhoaHocId = new KhoaHocService().GetKhoaHocId(suaHocVienDto.TenKhoaHoc);
             hocVien.NgaySinh = suaHocVienDto.NgaySinh;
             hocVien.QueQuan = suaHocVienDto.QueQuan;
             hocVien.DiaChi = suaHocVienDto.DiaChi;

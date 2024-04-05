@@ -5,4 +5,5 @@ namespace ef03.IService;
 public interface IKhoaHocService
 {
     public void ThemKhoaHoc(KhoaHocDto khoaHocDto);
+    public void XoaKhoaHoc(string tenKhoaHoc);
 }
