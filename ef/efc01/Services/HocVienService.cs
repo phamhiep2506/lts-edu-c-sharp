@@ -1,6 +1,6 @@
+using efc01.Dto;
 using efc01.IServices;
 using efc01.Models;
-using efc01.Dto;
 
 namespace efc01.Services;
 
@@ -29,8 +29,7 @@ public class HocVienService : IHocVienService
     public void CapNhatHocVien(CapNhatHocVienDto capNhatHocVien)
     {
         HocVien? hocVien = _context
-            .HocViens?
-            .Where(x => x.HoTen == capNhatHocVien.HoTen)
+            .HocViens?.Where(x => x.HoTen == capNhatHocVien.HoTen)
             .SingleOrDefault();
         if (hocVien != null)
         {
@@ -39,8 +38,10 @@ public class HocVienService : IHocVienService
             hocVien.Email = capNhatHocVien.Email;
             hocVien.SoDienThoai = capNhatHocVien.SoDienThoai;
             hocVien.DiaChi = capNhatHocVien.DiaChi != null ? capNhatHocVien.DiaChi : string.Empty;
-            hocVien.TrinhDo = capNhatHocVien.TrinhDo != null ? capNhatHocVien.TrinhDo : string.Empty;
-            hocVien.NgayDangKy = capNhatHocVien.NgayDangKy != null ? capNhatHocVien.NgayDangKy : new DateTime();
+            hocVien.TrinhDo =
+                capNhatHocVien.TrinhDo != null ? capNhatHocVien.TrinhDo : string.Empty;
+            hocVien.NgayDangKy =
+                capNhatHocVien.NgayDangKy != null ? capNhatHocVien.NgayDangKy : new DateTime();
 
             _context.Update(hocVien);
             _context.SaveChanges();
@@ -50,13 +51,31 @@ public class HocVienService : IHocVienService
     public void XoaHocVien(XoaHocVienDto xoaHocVienDto)
     {
         HocVien? hocVien = _context
-            .HocViens?
-            .Where(x => x.HoTen == xoaHocVienDto.HoTen)
+            .HocViens?.Where(x => x.HoTen == xoaHocVienDto.HoTen)
             .SingleOrDefault();
-        if(hocVien != null)
+        if (hocVien != null)
         {
             _context.Remove(hocVien);
             _context.SaveChanges();
         }
+    }
+
+    public List<HocVienDto> HienThiHocVien()
+    {
+        List<HocVienDto> hocVienDtos = new List<HocVienDto>();
+        hocVienDtos = _context
+            .HocViens.Select(x => new HocVienDto()
+            {
+                HoTen = x.HoTen,
+                NgaySinh = x.Ngaysinh,
+                GioiTinh = x.GioiTinh,
+                Email = x.Email,
+                SoDienThoai = x.SoDienThoai,
+                NgayDangKy = x.NgayDangKy
+            })
+            .OrderByDescending(x => x.NgayDangKy)
+            .ToList();
+
+        return hocVienDtos;
     }
 }

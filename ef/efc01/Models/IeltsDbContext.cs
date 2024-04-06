@@ -6,7 +6,8 @@ public class IeltsDbContext : DbContext
 {
     public DbSet<HocVien> HocViens { get; set; } = null!;
 
-    private string connectString = @"
+    private string connectString =
+        @"
         Server=localhost,1433;
         Database=Ielts;
         User=SA;

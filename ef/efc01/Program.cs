@@ -15,7 +15,7 @@ public class Program
         //     SoDienThoai = "0375622336"
         // });
 
-        // hocVienService.CapNhatHocVien(new CapNhatThongTinHocVien() {
+        // hocVienService.CapNhatHocVien(new CapNhatHocVienDto() {
         //         HoTen = "Phạm Văn Hiệp",
         //         NgaySinh = new DateTime(2000, 06, 25),
         //         GioiTinh = "Nam",
@@ -29,5 +29,13 @@ public class Program
         // hocVienService.XoaHocVien(new XoaHocVienDto() {
         //         HoTen = "Phạm Văn Hiệp"
         // });
+
+        // List<HocVienDto> hocVienDtos = new List<HocVienDto>();
+        // hocVienDtos = hocVienService.HienThiHocVien();
+        // hocVienDtos.ForEach(x =>
+        //     Console.WriteLine(
+        //         $"HoTen: {x.HoTen}, NgaySinh: {x.NgaySinh.ToString("dd/MM/yyyy")}, GioiTinh: {x.GioiTinh}, Email: {x.Email}, SoDienThoai: {x.SoDienThoai}"
+        //     )
+        // );
     }
 }
