@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using test_rf.Models;
+using test_ef.Models;
 
 #nullable disable
 
 namespace test_ef.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240408101734_v0")]
+    [Migration("20240408192254_v0")]
     partial class v0
     {
         /// <inheritdoc />
@@ -25,13 +25,13 @@ namespace test_ef.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("test_rf.Models.ChiTietDonHang", b =>
+            modelBuilder.Entity("test_ef.Models.ChiTietDonDatHang", b =>
                 {
-                    b.Property<int>("ChiTietDonHangId")
+                    b.Property<int>("ChiTietDonDatHangId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ChiTietDonHangId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ChiTietDonDatHangId"));
 
                     b.Property<int>("DonDatHangId")
                         .HasColumnType("int");
@@ -42,16 +42,16 @@ namespace test_ef.Migrations
                     b.Property<int>("SoLuong")
                         .HasColumnType("int");
 
-                    b.HasKey("ChiTietDonHangId");
+                    b.HasKey("ChiTietDonDatHangId");
 
                     b.HasIndex("DonDatHangId");
 
                     b.HasIndex("SanPhamId");
 
-                    b.ToTable("ChiTietDonHang");
+                    b.ToTable("ChiTietDonDatHang");
                 });
 
-            modelBuilder.Entity("test_rf.Models.DonDatHang", b =>
+            modelBuilder.Entity("test_ef.Models.DonDatHang", b =>
                 {
                     b.Property<int>("DonDatHangId")
                         .ValueGeneratedOnAdd()
@@ -78,8 +78,8 @@ namespace test_ef.Migrations
 
                     b.Property<string>("TinhTrang")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("DonDatHangId");
 
@@ -88,7 +88,7 @@ namespace test_ef.Migrations
                     b.ToTable("DonDatHang");
                 });
 
-            modelBuilder.Entity("test_rf.Models.KhachHang", b =>
+            modelBuilder.Entity("test_ef.Models.KhachHang", b =>
                 {
                     b.Property<int>("KhachHangId")
                         .ValueGeneratedOnAdd()
@@ -126,7 +126,7 @@ namespace test_ef.Migrations
                     b.ToTable("KhachHang");
                 });
 
-            modelBuilder.Entity("test_rf.Models.LoaiSanPham", b =>
+            modelBuilder.Entity("test_ef.Models.LoaiSanPham", b =>
                 {
                     b.Property<int>("LoaiSanPhamId")
                         .ValueGeneratedOnAdd()
@@ -149,7 +149,7 @@ namespace test_ef.Migrations
                     b.ToTable("LoaiSanPham");
                 });
 
-            modelBuilder.Entity("test_rf.Models.SanPham", b =>
+            modelBuilder.Entity("test_ef.Models.SanPham", b =>
                 {
                     b.Property<int>("SanPhamId")
                         .ValueGeneratedOnAdd()
@@ -165,8 +165,10 @@ namespace test_ef.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<bool>("LaSanPhamMoi")
-                        .HasColumnType("bit");
+                    b.Property<string>("LaSanPhamMoi")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("LoaiSanPhamId")
                         .HasColumnType("int");
@@ -196,15 +198,15 @@ namespace test_ef.Migrations
                     b.ToTable("SanPham");
                 });
 
-            modelBuilder.Entity("test_rf.Models.ChiTietDonHang", b =>
+            modelBuilder.Entity("test_ef.Models.ChiTietDonDatHang", b =>
                 {
-                    b.HasOne("test_rf.Models.DonDatHang", "DonDatHang")
+                    b.HasOne("test_ef.Models.DonDatHang", "DonDatHang")
                         .WithMany()
                         .HasForeignKey("DonDatHangId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("test_rf.Models.SanPham", "SanPham")
+                    b.HasOne("test_ef.Models.SanPham", "SanPham")
                         .WithMany()
                         .HasForeignKey("SanPhamId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -215,9 +217,9 @@ namespace test_ef.Migrations
                     b.Navigation("SanPham");
                 });
 
-            modelBuilder.Entity("test_rf.Models.DonDatHang", b =>
+            modelBuilder.Entity("test_ef.Models.DonDatHang", b =>
                 {
-                    b.HasOne("test_rf.Models.KhachHang", "KhachHang")
+                    b.HasOne("test_ef.Models.KhachHang", "KhachHang")
                         .WithMany()
                         .HasForeignKey("KhachHangId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -226,9 +228,9 @@ namespace test_ef.Migrations
                     b.Navigation("KhachHang");
                 });
 
-            modelBuilder.Entity("test_rf.Models.SanPham", b =>
+            modelBuilder.Entity("test_ef.Models.SanPham", b =>
                 {
-                    b.HasOne("test_rf.Models.LoaiSanPham", "LoaiSanPham")
+                    b.HasOne("test_ef.Models.LoaiSanPham", "LoaiSanPham")
                         .WithMany()
                         .HasForeignKey("LoaiSanPhamId")
                         .OnDelete(DeleteBehavior.Cascade)

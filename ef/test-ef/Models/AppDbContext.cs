@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace test_rf.Models;
+namespace test_ef.Models;
 
 public class AppDbContext : DbContext
 {
@@ -8,12 +8,12 @@ public class AppDbContext : DbContext
     public DbSet<LoaiSanPham> LoaiSanPham { get; set; } = null!;
     public DbSet<SanPham> SanPham { get; set; } = null!;
     public DbSet<DonDatHang> DonDatHang { get; set; } = null!;
-    public DbSet<ChiTietDonHang> ChiTietDonHang { get; set; } = null!;
+    public DbSet<ChiTietDonDatHang> ChiTietDonDatHang { get; set; } = null!;
 
     private string connectString =
         @"
         Server=localhost,1433;
-        Database=DonDatHang;
+        Database=CuaHang;
         User=SA;
         Password=Password123;
         TrustServerCertificate=True;

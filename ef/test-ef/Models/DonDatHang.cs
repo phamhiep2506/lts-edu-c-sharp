@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace test_rf.Models;
+namespace test_ef.Models;
 
 public class DonDatHang
 {
@@ -19,7 +19,7 @@ public class DonDatHang
     [MaxLength(100)]
     public string GhiChu { get; set; } = string.Empty;
 
-    [MaxLength(10)]
+    [MaxLength(50)]
     public string TinhTrang { get; set; } = string.Empty;
 
     public KhachHang KhachHang { get; set; } = null!;

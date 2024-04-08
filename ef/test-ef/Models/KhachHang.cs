@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace test_rf.Models;
+namespace test_ef.Models;
 
 public class KhachHang
 {

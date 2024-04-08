@@ -53,7 +53,7 @@ namespace test_ef.Migrations
                     NgayDat = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NgayGioTraThucTe = table.Column<DateTime>(type: "datetime2", nullable: false),
                     GhiChu = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    TinhTrang = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
+                    TinhTrang = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,7 +79,7 @@ namespace test_ef.Migrations
                     NhaSanXuat = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     NgayDang = table.Column<DateTime>(type: "datetime2", nullable: false),
                     GiaBan = table.Column<decimal>(type: "money", nullable: false),
-                    LaSanPhamMoi = table.Column<bool>(type: "bit", nullable: false)
+                    LaSanPhamMoi = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -93,10 +93,10 @@ namespace test_ef.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ChiTietDonHang",
+                name: "ChiTietDonDatHang",
                 columns: table => new
                 {
-                    ChiTietDonHangId = table.Column<int>(type: "int", nullable: false)
+                    ChiTietDonDatHangId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DonDatHangId = table.Column<int>(type: "int", nullable: false),
                     SanPhamId = table.Column<int>(type: "int", nullable: false),
@@ -104,15 +104,15 @@ namespace test_ef.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ChiTietDonHang", x => x.ChiTietDonHangId);
+                    table.PrimaryKey("PK_ChiTietDonDatHang", x => x.ChiTietDonDatHangId);
                     table.ForeignKey(
-                        name: "FK_ChiTietDonHang_DonDatHang_DonDatHangId",
+                        name: "FK_ChiTietDonDatHang_DonDatHang_DonDatHangId",
                         column: x => x.DonDatHangId,
                         principalTable: "DonDatHang",
                         principalColumn: "DonDatHangId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ChiTietDonHang_SanPham_SanPhamId",
+                        name: "FK_ChiTietDonDatHang_SanPham_SanPhamId",
                         column: x => x.SanPhamId,
                         principalTable: "SanPham",
                         principalColumn: "SanPhamId",
@@ -120,13 +120,13 @@ namespace test_ef.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChiTietDonHang_DonDatHangId",
-                table: "ChiTietDonHang",
+                name: "IX_ChiTietDonDatHang_DonDatHangId",
+                table: "ChiTietDonDatHang",
                 column: "DonDatHangId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChiTietDonHang_SanPhamId",
-                table: "ChiTietDonHang",
+                name: "IX_ChiTietDonDatHang_SanPhamId",
+                table: "ChiTietDonDatHang",
                 column: "SanPhamId");
 
             migrationBuilder.CreateIndex(
@@ -144,7 +144,7 @@ namespace test_ef.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ChiTietDonHang");
+                name: "ChiTietDonDatHang");
 
             migrationBuilder.DropTable(
                 name: "DonDatHang");

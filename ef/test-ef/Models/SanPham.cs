@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace test_rf.Models;
+namespace test_ef.Models;
 
 public class SanPham
 {
@@ -32,8 +32,8 @@ public class SanPham
     [Column(TypeName = "money")]
     public decimal GiaBan { get; set; }
 
-    [Column(TypeName = "bit")]
-    public bool LaSanPhamMoi { get; set; }
+    [MaxLength(50)]
+    public string LaSanPhamMoi { get; set; } = string.Empty;
 
     public LoaiSanPham LoaiSanPham { get; set; } = null!;
 }

@@ -1,7 +1,6 @@
-
 using System.ComponentModel.DataAnnotations;
 
-namespace test_rf.Models;
+namespace test_ef.Models;
 
 public class LoaiSanPham
 {
@@ -11,7 +10,7 @@ public class LoaiSanPham
     [Required]
     [MaxLength(100)]
     public required string TenLoai { get; set; }
-    
+
     [MaxLength(100)]
     public string GhiChu { get; set; } = string.Empty;
 }

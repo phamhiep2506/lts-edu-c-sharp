@@ -1,11 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace test_rf.Models;
+namespace test_ef.Models;
 
-public class ChiTietDonHang
+public class ChiTietDonDatHang
 {
     [Key]
-    public int ChiTietDonHangId { get; set; }
+    public int ChiTietDonDatHangId { get; set; }
 
     [Required]
     public int DonDatHangId { get; set; }
