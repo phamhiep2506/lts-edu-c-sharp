@@ -9,7 +9,8 @@ public class CongThucNauAnDbContext : DbContext
     public DbSet<MonAn> MonAn { get; set; } = null!;
     public DbSet<LoaiMonAn> LoaiMonAn { get; set; } = null!;
 
-    private string connectString = @"
+    private string connectString =
+        @"
         Server=localhost,1433;
         Database=CongThucNauAn;
         User=SA;
@@ -18,8 +19,8 @@ public class CongThucNauAnDbContext : DbContext
     ";
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer(connectString);
-        }
+    {
+        base.OnConfiguring(optionsBuilder);
+        optionsBuilder.UseSqlServer(connectString);
+    }
 }

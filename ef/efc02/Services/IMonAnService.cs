@@ -4,5 +4,6 @@ namespace efc02.Services;
 
 public interface IMonAnService
 {
-    public void ThemMonAn (ThemMonAnDto themMonAnDto);
+    public void ThemMonAn(ThemMonAnDto themMonAnDto);
+    public int GetMonAnId(string tenMon);
 }
