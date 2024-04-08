@@ -26,8 +26,7 @@ public class VatTuService : IVatTuService
     public int GetSoLuong(string tenVatTu)
     {
         int getSoLuong = _context
-            .VatTu
-            .Where(x => x.TenVatTu == tenVatTu)
+            .VatTu.Where(x => x.TenVatTu == tenVatTu)
             .Select(x => x.SoLuongTon)
             .SingleOrDefault();
         return getSoLuong;
@@ -36,8 +35,7 @@ public class VatTuService : IVatTuService
     public int GetVatTuId(string tenVatTu)
     {
         int vatTuId = _context
-            .VatTu
-            .Where(x => x.TenVatTu == tenVatTu)
+            .VatTu.Where(x => x.TenVatTu == tenVatTu)
             .Select(x => x.VatTuId)
             .SingleOrDefault();
         return vatTuId;
@@ -46,13 +44,11 @@ public class VatTuService : IVatTuService
     public void HienVatTu()
     {
         List<VatTuDto> vatTuDtos = _context
-            .VatTu
-            .Select(x => new VatTuDto {
-                TenVatTu = x.TenVatTu,
-                SoLuongTon = x.SoLuongTon
-            }).ToList();
+            .VatTu.Select(x => new VatTuDto { TenVatTu = x.TenVatTu, SoLuongTon = x.SoLuongTon })
+            .ToList();
 
-        vatTuDtos.ForEach(x => {
+        vatTuDtos.ForEach(x =>
+        {
             string msgSLTK = x.SoLuongTon == 0 ? "Het Hang" : x.SoLuongTon.ToString();
             Console.WriteLine($"{x.TenVatTu} - SLTK: {msgSLTK}");
         });

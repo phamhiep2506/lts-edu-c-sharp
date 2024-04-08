@@ -9,6 +9,4 @@ public class PhieuNhapDto
     public required int MaPhieu { get; set; }
 
     public string TieuDe { get; set; } = string.Empty;
-
 }
-

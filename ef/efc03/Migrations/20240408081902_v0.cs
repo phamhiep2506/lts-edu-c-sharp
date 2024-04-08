@@ -15,51 +15,70 @@ namespace efc03.Migrations
                 name: "PhieuNhap",
                 columns: table => new
                 {
-                    PhieuNhapId = table.Column<int>(type: "int", nullable: false)
+                    PhieuNhapId = table
+                        .Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MaPhieu = table.Column<int>(type: "int", nullable: false),
-                    TieuDe = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    TieuDe = table.Column<string>(
+                        type: "nvarchar(100)",
+                        maxLength: 100,
+                        nullable: false
+                    ),
                     NgayNhap = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PhieuNhap", x => x.PhieuNhapId);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "PhieuXuat",
                 columns: table => new
                 {
-                    PhieuXuatId = table.Column<int>(type: "int", nullable: false)
+                    PhieuXuatId = table
+                        .Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MaPhieu = table.Column<int>(type: "int", nullable: false),
-                    TieuDe = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    TieuDe = table.Column<string>(
+                        type: "nvarchar(100)",
+                        maxLength: 100,
+                        nullable: false
+                    ),
                     NgayXuat = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PhieuXuat", x => x.PhieuXuatId);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "VatTu",
                 columns: table => new
                 {
-                    VatTuId = table.Column<int>(type: "int", nullable: false)
+                    VatTuId = table
+                        .Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TenVatTu = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    TenVatTu = table.Column<string>(
+                        type: "nvarchar(100)",
+                        maxLength: 100,
+                        nullable: false
+                    ),
                     SoLuongTon = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VatTu", x => x.VatTuId);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "ChiTietPhieuNhap",
                 columns: table => new
                 {
-                    ChiTietPhieuNhapId = table.Column<int>(type: "int", nullable: false)
+                    ChiTietPhieuNhapId = table
+                        .Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     VatTuId = table.Column<int>(type: "int", nullable: false),
                     PhieuNhapId = table.Column<int>(type: "int", nullable: false),
@@ -73,20 +92,24 @@ namespace efc03.Migrations
                         column: x => x.PhieuNhapId,
                         principalTable: "PhieuNhap",
                         principalColumn: "PhieuNhapId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade
+                    );
                     table.ForeignKey(
                         name: "FK_ChiTietPhieuNhap_VatTu_VatTuId",
                         column: x => x.VatTuId,
                         principalTable: "VatTu",
                         principalColumn: "VatTuId",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "ChiTietPhieuXuat",
                 columns: table => new
                 {
-                    ChiTietPhieuXuatId = table.Column<int>(type: "int", nullable: false)
+                    ChiTietPhieuXuatId = table
+                        .Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     VatTuId = table.Column<int>(type: "int", nullable: false),
                     PhieuXuatId = table.Column<int>(type: "int", nullable: false),
@@ -100,55 +123,57 @@ namespace efc03.Migrations
                         column: x => x.PhieuXuatId,
                         principalTable: "PhieuXuat",
                         principalColumn: "PhieuXuatId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade
+                    );
                     table.ForeignKey(
                         name: "FK_ChiTietPhieuXuat_VatTu_VatTuId",
                         column: x => x.VatTuId,
                         principalTable: "VatTu",
                         principalColumn: "VatTuId",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_ChiTietPhieuNhap_PhieuNhapId",
                 table: "ChiTietPhieuNhap",
-                column: "PhieuNhapId");
+                column: "PhieuNhapId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_ChiTietPhieuNhap_VatTuId",
                 table: "ChiTietPhieuNhap",
                 column: "VatTuId",
-                unique: true);
+                unique: true
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_ChiTietPhieuXuat_PhieuXuatId",
                 table: "ChiTietPhieuXuat",
-                column: "PhieuXuatId");
+                column: "PhieuXuatId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_ChiTietPhieuXuat_VatTuId",
                 table: "ChiTietPhieuXuat",
                 column: "VatTuId",
-                unique: true);
+                unique: true
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "ChiTietPhieuNhap");
+            migrationBuilder.DropTable(name: "ChiTietPhieuNhap");
 
-            migrationBuilder.DropTable(
-                name: "ChiTietPhieuXuat");
+            migrationBuilder.DropTable(name: "ChiTietPhieuXuat");
 
-            migrationBuilder.DropTable(
-                name: "PhieuNhap");
+            migrationBuilder.DropTable(name: "PhieuNhap");
 
-            migrationBuilder.DropTable(
-                name: "PhieuXuat");
+            migrationBuilder.DropTable(name: "PhieuXuat");
 
-            migrationBuilder.DropTable(
-                name: "VatTu");
+            migrationBuilder.DropTable(name: "VatTu");
         }
     }
 }

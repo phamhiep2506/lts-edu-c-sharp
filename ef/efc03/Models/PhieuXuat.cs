@@ -8,7 +8,7 @@ public class PhieuXuat
     public int PhieuXuatId { get; set; }
 
     [Required]
-    public int MaPhieu { get; set;}
+    public int MaPhieu { get; set; }
 
     [Required]
     [MaxLength(100)]
