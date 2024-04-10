@@ -19,7 +19,7 @@ public class SanPham
     {
         SanPhamService sanPhamService = new SanPhamService();
         List<ThongTinSanPhamDate> thongTinSanPhams =
-            sanPhamService.LayThongTinSanPhamKhongBanDuocNam2019();
+            sanPhamService.LayThongTinSanPhamBanDuocNam2019();
         thongTinSanPhams.ForEach(thongTinSanPham =>
         {
             Console.WriteLine(

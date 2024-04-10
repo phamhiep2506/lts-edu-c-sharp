@@ -36,4 +36,6 @@ public class SanPham
     public string LaSanPhamMoi { get; set; } = string.Empty;
 
     public LoaiSanPham LoaiSanPham { get; set; } = null!;
+
+    public ICollection<ChiTietDonDatHang> chiTietDonDatHangs { get; } = new List<ChiTietDonDatHang>();
 }

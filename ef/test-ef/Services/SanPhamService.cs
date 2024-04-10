@@ -1,3 +1,5 @@
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.EntityFrameworkCore;
 using test_ef.Dtos;
 using test_ef.IServices;
 using test_ef.Models;
@@ -16,64 +18,45 @@ public class SanPhamService : ISanPhamService
     public List<ThongTinSanPham> LayThongTinSanPham()
     {
         List<ThongTinSanPham> thongTinSanPhams = _context
-            .SanPham.Join(
-                _context.LoaiSanPham,
-                sp => sp.LoaiSanPhamId,
-                lsp => lsp.LoaiSanPhamId,
-                (sp, lsp) =>
-                    new ThongTinSanPham() { TenSanPham = sp.TenSanPham, TenLoai = lsp.TenLoai }
-            )
-            .ToList();
-        return thongTinSanPhams;
-    }
-
-    public List<ThongTinSanPhamDate> LayThongTinSanPhamKhongBanDuocNam2019()
-    {
-        List<ThongTinSanPhamDate> thongTinSanPhams = _context
-            .DonDatHang.Join(
-                _context.ChiTietDonDatHang,
-                ddh => ddh.DonDatHangId,
-                ctddh => ctddh.DonDatHangId,
-                (ddh, ctddh) => new { ddh, ctddh }
-            )
-            .Join(
-                _context.SanPham,
-                newJoinTable => newJoinTable.ctddh.SanPhamId,
-                sp => sp.SanPhamId,
-                (newJoinTable, sp) => new { newJoinTable, sp }
-            )
-            .Join(
-                _context.LoaiSanPham,
-                newJoinTable => newJoinTable.sp.LoaiSanPhamId,
-                lsp => lsp.LoaiSanPhamId,
-                (newJoinTable, lsp) => new { newJoinTable, lsp }
-            )
-            .Where(x => x.newJoinTable.newJoinTable.ddh.NgayDat.Year == 2019)
-            .Select(x => new ThongTinSanPhamDate
+            .SanPham.Include(x => x.LoaiSanPham)
+            .Select(x => new ThongTinSanPham()
             {
-                TenSanPham = x.newJoinTable.sp.TenSanPham,
-                TenLoai = x.lsp.TenLoai,
-                NgayDat = x.newJoinTable.newJoinTable.ddh.NgayDat
+                TenSanPham = x.TenSanPham,
+                TenLoai = x.LoaiSanPham.TenLoai
             })
             .ToList();
         return thongTinSanPhams;
     }
 
+    public List<ThongTinSanPhamDate> LayThongTinSanPhamBanDuocNam2019()
+    {
+        List<ThongTinSanPhamDate> thongTinSanPhamDates = _context
+            .ChiTietDonDatHang.Include(x => x.DonDatHang)
+            .Include(x => x.SanPham)
+            .ThenInclude(x => x.LoaiSanPham)
+            .Where(x => x.DonDatHang.NgayDat.Year == 2019)
+            .Select(x => new ThongTinSanPhamDate()
+            {
+                TenSanPham = x.SanPham.TenSanPham,
+                TenLoai = x.SanPham.LoaiSanPham.TenLoai,
+                NgayDat = x.DonDatHang.NgayDat
+            })
+            .ToList();
+        return thongTinSanPhamDates;
+    }
+
     public List<ThongTinSanPhamDate> LaySanPhamTDoAnTrongNgay25052020()
     {
         List<ThongTinSanPhamDate> thongTinSanPhams = _context
-            .SanPham.Join(
-                _context.LoaiSanPham,
-                sp => sp.LoaiSanPhamId,
-                lsp => lsp.LoaiSanPhamId,
-                (sp, lsp) => new { sp, lsp }
+            .SanPham.Include(x => x.LoaiSanPham)
+            .Where(x =>
+                (x.NgayDang == new DateTime(2020, 05, 25)) && (x.LoaiSanPham.TenLoai == "Đồ ăn")
             )
-            .Where(x => (x.sp.NgayDang == new DateTime(2020, 05, 25)) && (x.lsp.TenLoai == "Đồ ăn"))
             .Select(x => new ThongTinSanPhamDate
             {
-                TenSanPham = x.sp.TenSanPham,
-                TenLoai = x.lsp.TenLoai,
-                NgayDat = x.sp.NgayDang
+                TenSanPham = x.TenSanPham,
+                TenLoai = x.LoaiSanPham.TenLoai,
+                NgayDat = x.NgayDang
             })
             .ToList();
         return thongTinSanPhams;
@@ -82,35 +65,20 @@ public class SanPhamService : ISanPhamService
     public List<SHDSanPhamSL> LaySanPhamTDoAnDoUong()
     {
         List<SHDSanPhamSL> sHDSanPhamSLs = _context
-            .DonDatHang.Join(
-                _context.ChiTietDonDatHang,
-                ddh => ddh.DonDatHangId,
-                ctddh => ctddh.DonDatHangId,
-                (ddh, ctddh) => new { ddh, ctddh }
-            )
-            .Join(
-                _context.SanPham,
-                newJoinTable => newJoinTable.ctddh.SanPhamId,
-                sp => sp.SanPhamId,
-                (newJoinTable, sp) => new { newJoinTable, sp }
-            )
-            .Join(
-                _context.LoaiSanPham,
-                newJoinTable => newJoinTable.sp.LoaiSanPhamId,
-                lsp => lsp.LoaiSanPhamId,
-                (newJoinTable, lsp) => new { newJoinTable, lsp }
-            )
+            .ChiTietDonDatHang.Include(x => x.DonDatHang)
+            .Include(x => x.SanPham)
+            .ThenInclude(x => x.LoaiSanPham)
             .Where(x =>
-                (x.lsp.TenLoai == "Đồ ăn" || x.lsp.TenLoai == "Đồ uống")
-                && x.newJoinTable.newJoinTable.ctddh.SoLuong >= 10
-                && x.newJoinTable.newJoinTable.ctddh.SoLuong <= 20
+                (x.SanPham.LoaiSanPham.TenLoai == "Đồ ăn" || x.SanPham.LoaiSanPham.TenLoai == "Đồ uống")
+                && x.SoLuong >= 10
+                && x.SoLuong <= 20
             )
             .Select(x => new SHDSanPhamSL
             {
-                SoHieuDon = x.newJoinTable.newJoinTable.ddh.SoHieuDon,
-                TenSanPham = x.newJoinTable.sp.TenSanPham,
-                TenLoai = x.lsp.TenLoai,
-                SoLuong = x.newJoinTable.newJoinTable.ctddh.SoLuong
+                SoHieuDon = x.DonDatHang.SoHieuDon,
+                TenSanPham = x.SanPham.TenSanPham,
+                TenLoai = x.SanPham.LoaiSanPham.TenLoai,
+                SoLuong = x.SoLuong
             })
             .ToList();
         return sHDSanPhamSLs;
@@ -119,20 +87,11 @@ public class SanPhamService : ISanPhamService
     public decimal LayTongTienTrongNgay25052020()
     {
         decimal tongTien = _context
-            .DonDatHang.Join(
-                _context.ChiTietDonDatHang,
-                ddh => ddh.DonDatHangId,
-                ctddh => ctddh.DonDatHangId,
-                (ddh, ctddh) => new { ddh, ctddh }
-            )
-            .Join(
-                _context.SanPham,
-                newJoinTable => newJoinTable.ctddh.SanPhamId,
-                sp => sp.SanPhamId,
-                (newJoinTable, sp) => new { newJoinTable, sp }
-            )
-            .Where(x => x.newJoinTable.ddh.NgayDat == new DateTime(2020, 05, 25))
-            .Sum(x => x.newJoinTable.ctddh.SoLuong * x.sp.GiaBan);
+            .ChiTietDonDatHang
+            .Include(x => x.DonDatHang)
+            .Include(x => x.SanPham)
+            .Where(x => x.DonDatHang.NgayDat == new DateTime(2020, 05, 25))
+            .Sum(x => x.SoLuong * x.SanPham.GiaBan);
         return tongTien;
     }
 }

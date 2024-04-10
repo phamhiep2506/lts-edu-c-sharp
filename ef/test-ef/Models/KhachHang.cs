@@ -23,4 +23,6 @@ public class KhachHang
 
     [MaxLength(20)]
     public string Email { get; set; } = string.Empty;
+
+    public ICollection<DonDatHang> donDatHangs { get; } = new List<DonDatHang>();
 }

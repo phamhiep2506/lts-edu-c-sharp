@@ -13,4 +13,6 @@ public class LoaiSanPham
 
     [MaxLength(100)]
     public string GhiChu { get; set; } = string.Empty;
+
+    public ICollection<SanPham> sanPhams = new List<SanPham>();
 }
