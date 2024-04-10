@@ -37,5 +37,6 @@ public class SanPham
 
     public LoaiSanPham LoaiSanPham { get; set; } = null!;
 
-    public ICollection<ChiTietDonDatHang> chiTietDonDatHangs { get; } = new List<ChiTietDonDatHang>();
+    public ICollection<ChiTietDonDatHang> chiTietDonDatHangs { get; } =
+        new List<ChiTietDonDatHang>();
 }

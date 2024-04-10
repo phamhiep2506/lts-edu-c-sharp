@@ -23,5 +23,6 @@ public class DonDatHang
     public string TinhTrang { get; set; } = string.Empty;
 
     public KhachHang KhachHang { get; set; } = null!;
-    public ICollection<ChiTietDonDatHang> ChiTietDonDatHangs { get; } = new List<ChiTietDonDatHang>();
+    public ICollection<ChiTietDonDatHang> ChiTietDonDatHangs { get; } =
+        new List<ChiTietDonDatHang>();
 }
