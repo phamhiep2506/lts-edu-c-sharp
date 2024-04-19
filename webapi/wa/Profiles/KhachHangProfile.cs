@@ -10,7 +10,6 @@ public class KhachHangProfile : Profile
     {
         CreateMap<KhachHang, AddKhachHangDto>()
             .ForMember(dest => dest.HoTen, source => source.MapFrom(s => s.HoTen))
-            .ForMember(dest => dest.NgaySinh, source => source.MapFrom(s => s.NgaySinh))
-            .ForMember(dest => dest.SoDienThoai, source => source.MapFrom(s => s.SoDienThoai));
+            .ForMember(dest => dest.SoDienThoai, source => source.MapFrom(s => s.SoDienThoai)).ReverseMap();
     }
 }

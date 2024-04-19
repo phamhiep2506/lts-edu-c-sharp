@@ -1,20 +1,20 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using wa.Models;
-using wa.Models.Dtos.HoaDon;
+using wa.Models.Dtos.KhachHang;
 using wa.Services;
 
 namespace wa.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class HoaDonController : ControllerBase
+public class KhachHangController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly ILogger<HoaDonController> _logger;
     private readonly CuaHangContext _context;
 
-    public HoaDonController(
+    public KhachHangController(
         IMapper mapper,
         ILogger<HoaDonController> logger,
         CuaHangContext context
@@ -26,10 +26,10 @@ public class HoaDonController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult CreateHoaDon(AddHoaDonDto addHoaDonDto)
+    public IActionResult CreateKhachHang(AddKhachHangDto addKhachHangDto)
     {
-        HoaDon hoaDon = new HoaDonService(_mapper, _context).AddHoaDon(addHoaDonDto);
+        KhachHang khachHang = new KhachHangService(_mapper, _context).AddKhachHang(addKhachHangDto);
 
-        return Ok(hoaDon);
+        return Ok(khachHang);
     }
 }
