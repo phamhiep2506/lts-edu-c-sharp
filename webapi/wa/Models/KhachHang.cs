@@ -12,6 +12,7 @@ public class KhachHang
 
     public DateTime NgaySinh { get; set; }
 
+    [MaxLength(15)]
     public string? SoDienThoai { get; set; }
 
     public ICollection<HoaDon>? HoaDons { get; set; }

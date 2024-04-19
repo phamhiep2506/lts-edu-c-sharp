@@ -17,7 +17,7 @@ public class SanPham
     [MaxLength(100)]
     public string? MoTa { get; set; }
 
-    public DateTime? NgayHetHan { get; set; }
+    public DateTime NgayHetHan { get; set; }
 
     [MaxLength(50)]
     public string? KyHieuSanPham { get; set; }

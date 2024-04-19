@@ -1,4 +1,8 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using wa.Models;
+using wa.Models.Dtos.HoaDon;
+using wa.Services;
 
 namespace wa.Controllers;
 
@@ -6,16 +10,25 @@ namespace wa.Controllers;
 [Route("api/[controller]")]
 public class HoaDonController : ControllerBase
 {
-    private readonly HoaDonController _context;
+    private readonly IMapper _mapper;
+    private readonly ILogger<HoaDonController> _logger;
+    private readonly CuaHangContext _context;
 
-    public HoaDonController()
+    public HoaDonController(
+        IMapper mapper,
+        ILogger<HoaDonController> logger,
+        CuaHangContext context
+    )
     {
-        _context = new HoaDonController();
+        _mapper = mapper;
+        _logger = logger;
+        _context = context;
     }
 
-    [HttpGet]
-    public IActionResult GetHoaDon()
+    [HttpPost]
+    public IActionResult PostHoaDon(AddHoaDonDto addHoaDonDto)
     {
-        return NotFound();
+        AddHoaDonDto HoaDonDto = new HoaDonService(_mapper, _context).AddHoaDon(addHoaDonDto);
+        return Ok(HoaDonDto);
     }
 }

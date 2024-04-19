@@ -18,7 +18,8 @@ namespace wa.Migrations
                 defaultValue: 0.0,
                 oldClrType: typeof(double),
                 oldType: "float",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<double>(
                 name: "ThanhTien",
@@ -28,7 +29,8 @@ namespace wa.Migrations
                 defaultValue: 0.0,
                 oldClrType: typeof(double),
                 oldType: "float",
-                oldNullable: true);
+                oldNullable: true
+            );
         }
 
         /// <inheritdoc />
@@ -40,7 +42,8 @@ namespace wa.Migrations
                 type: "float",
                 nullable: true,
                 oldClrType: typeof(double),
-                oldType: "float");
+                oldType: "float"
+            );
 
             migrationBuilder.AlterColumn<double>(
                 name: "ThanhTien",
@@ -48,7 +51,8 @@ namespace wa.Migrations
                 type: "float",
                 nullable: true,
                 oldClrType: typeof(double),
-                oldType: "float");
+                oldType: "float"
+            );
         }
     }
 }

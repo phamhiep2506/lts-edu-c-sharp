@@ -13,6 +13,7 @@ public class ChiTietHoaDon
 
     public int SoLuong { get; set; }
 
+    [MaxLength(50)]
     public string? DonViTinh { get; set; }
 
     public double ThanhTien { get; set; }
