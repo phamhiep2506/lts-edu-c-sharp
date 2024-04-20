@@ -2,9 +2,10 @@ using System.Globalization;
 using AutoMapper;
 using wa.Models;
 using wa.Models.Dtos.KhachHang;
+using wa.Services.IServices;
 namespace wa.Services;
 
-public class KhachHangService
+public class KhachHangService : IKhachHangService
 {
     private readonly IMapper _mapper;
     private readonly CuaHangContext _context;

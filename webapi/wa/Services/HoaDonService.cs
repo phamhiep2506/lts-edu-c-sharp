@@ -19,15 +19,33 @@ public class HoaDonService : IHoaDonService
     public HoaDon AddHoaDon(AddHoaDonDto addHoaDonDto)
     {
         HoaDon hoaDon = _mapper.Map<HoaDon>(addHoaDonDto);
-        int? totalBillInDay;
-        totalBillInDay = _context
+
+        int? totalBillInDay = _context
             .HoaDons?.Where(x =>
                 x.ThoiGianTao.Year == DateTime.Now.Year
                 && x.ThoiGianTao.Month == DateTime.Now.Month
-                && x.ThoiGianTao.Day == DateTime.Now.Year
+                && x.ThoiGianTao.Day == DateTime.Now.Day
             )
-            .Count();
-        hoaDon.MaGiaoDich = DateTime.Now.ToString("yyyymmdd") + "_" + totalBillInDay;
+            .GroupBy(x => x.KhachHangId)
+            .Select(x => new { count = x.Count() })
+            .FirstOrDefault()
+            ?.count;
+
+        int? khachHangId = _context
+            .KhachHangs?.Where(x => x.HoTen == addHoaDonDto.TenKhachHang)
+            .Select(x => x.KhachHangId)
+            .FirstOrDefault();
+
+        if (khachHangId != null)
+        {
+            hoaDon.KhachHangId = khachHangId.Value;
+        }
+
+        if (totalBillInDay != null)
+        {
+            hoaDon.MaGiaoDich = DateTime.Now.ToString("yyyymmdd") + "_" + (totalBillInDay + 1).ToString()?.PadLeft(3, '0');
+        }
+
         hoaDon.ThoiGianTao = DateTime.Now;
         _context.Add(hoaDon);
         _context.SaveChanges();
