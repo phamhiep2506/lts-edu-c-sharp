@@ -1,20 +1,20 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using wa.Models;
-using wa.Models.Dtos.KhachHang;
+using wa.Models.Dtos.SanPham;
 using wa.Services;
 
 namespace wa.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class KhachHangController : ControllerBase
+public class SanPhamController : Controller
 {
     private readonly IMapper _mapper;
     private readonly ILogger<HoaDonController> _logger;
     private readonly CuaHangContext _context;
 
-    public KhachHangController(
+    public SanPhamController(
         IMapper mapper,
         ILogger<HoaDonController> logger,
         CuaHangContext context
@@ -26,17 +26,17 @@ public class KhachHangController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult CreateKhachHang(CreateKhachHangDto createKhachHangDto)
+    public IActionResult CreateLoaiSanPham(CreateSanPhamDto createSanPhamDto)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest();
         }
 
-        GetKhachHangDto khachHang = new KhachHangService(_mapper, _context).CreateKhachHang(
-            createKhachHangDto
+        GetSanPhamDto sanPham = new SanPhamService(_mapper, _context).CreateSanPham(
+                createSanPhamDto
         );
 
-        return Ok(khachHang);
+        return Ok(sanPham);
     }
 }

@@ -1,8 +1,8 @@
-using System.Globalization;
 using AutoMapper;
 using wa.Models;
 using wa.Models.Dtos.KhachHang;
 using wa.Services.IServices;
+
 namespace wa.Services;
 
 public class KhachHangService : IKhachHangService
@@ -16,15 +16,15 @@ public class KhachHangService : IKhachHangService
         _context = context;
     }
 
-    public KhachHang AddKhachHang(AddKhachHangDto addKhachHangDto)
+    public GetKhachHangDto CreateKhachHang(CreateKhachHangDto createKhachHangDto)
     {
-        KhachHang khachHang = _mapper.Map<KhachHang>(addKhachHangDto);
-        if(addKhachHangDto.NgaySinh != null)
-        {
-            khachHang.NgaySinh = DateTime.ParseExact(addKhachHangDto.NgaySinh, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-        }
+        KhachHang khachHang = _mapper.Map<CreateKhachHangDto, KhachHang>(createKhachHangDto);
+
         _context.Add(khachHang);
         _context.SaveChanges();
-        return khachHang;
+
+        GetKhachHangDto getKhachHangDto = _mapper.Map<KhachHang, GetKhachHangDto>(khachHang);
+
+        return getKhachHangDto;
     }
 }
