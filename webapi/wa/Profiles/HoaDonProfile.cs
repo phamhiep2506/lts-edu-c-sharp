@@ -8,9 +8,7 @@ public class HoaDonProfile : Profile
 {
     public HoaDonProfile()
     {
-        CreateMap<HoaDon, AddHoaDonDto>()
-            .ForMember(dest => dest.TenHoaDon, source => source.MapFrom(s => s.TenHoaDon))
-            .ForMember(dest => dest.GhiChu, source => source.MapFrom(s => s.GhiChu))
-            .ReverseMap();
+        CreateMap<CreateHoaDonDto, HoaDon>();
+        CreateMap<HoaDon, GetHoaDonDto>();
     }
 }

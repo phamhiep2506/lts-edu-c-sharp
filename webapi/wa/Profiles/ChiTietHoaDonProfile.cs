@@ -8,8 +8,7 @@ public class ChiTietHoaDonProfile : Profile
 {
     public ChiTietHoaDonProfile()
     {
-        CreateMap<ChiTietHoaDon, AddChiTietHoaDonDto>()
-            .ForMember(dest => dest.SoLuong, source => source.MapFrom(s => s.SoLuong))
-            .ForMember(dest => dest.DonViTinh, source => source.MapFrom(s => s.DonViTinh));
+        CreateMap<CreateChiTietHoaDonDto, ChiTietHoaDon>();
+        CreateMap<ChiTietHoaDon, GetChiTietHoaDonDto>();
     }
 }

@@ -25,7 +25,11 @@ public class KhachHangService : IKhachHangService
 
         if (isHoTen == true)
         {
-            return new ResponseDto<GetKhachHangDto>() { status = 0, msg = "Khách hàng đã tồn tại" };
+            return new ResponseDto<GetKhachHangDto>()
+            {
+                status = "error",
+                message = "Khách hàng đã tồn tại"
+            };
         }
 
         KhachHang khachHang = _mapper.Map<CreateKhachHangDto, KhachHang>(createKhachHangDto);
@@ -37,9 +41,38 @@ public class KhachHangService : IKhachHangService
 
         return new ResponseDto<GetKhachHangDto>()
         {
-            status = 200,
-            msg = "Thêm khách hàng thành công",
+            status = "success",
+            message = "ok",
             items = new List<GetKhachHangDto>() { getKhachHangDto }
         };
+    }
+
+    public int GetKhachHangId(GetKhachHangDto getKhachHangDto)
+    {
+        if (getKhachHangDto.HoTen == null || getKhachHangDto.SoDienThoai == null)
+        {
+            return -1;
+        }
+
+        bool? isKhachHang = _context.KhachHangs?.Any(x =>
+            x.HoTen == getKhachHangDto.HoTen && x.SoDienThoai == getKhachHangDto.SoDienThoai
+        );
+        if (isKhachHang == false || isKhachHang == null)
+        {
+            return -1;
+        }
+
+        int? khachHangId = _context
+            .KhachHangs?.Where(x =>
+                x.HoTen == getKhachHangDto.HoTen && x.SoDienThoai == getKhachHangDto.SoDienThoai
+            )
+            .Select(x => x.KhachHangId)
+            .FirstOrDefault();
+
+        if (khachHangId == null)
+        {
+            return -1;
+        }
+        return (int)khachHangId;
     }
 }

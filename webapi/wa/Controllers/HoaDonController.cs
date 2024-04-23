@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using wa.Models;
+using wa.Models.Dtos;
 using wa.Models.Dtos.HoaDon;
 using wa.Services;
 
@@ -28,8 +29,10 @@ public class HoaDonController : ControllerBase
     [HttpPost]
     public IActionResult CreateHoaDon(AddHoaDonDto addHoaDonDto)
     {
-        HoaDon hoaDon = new HoaDonService(_mapper, _context).AddHoaDon(addHoaDonDto);
+        ResponseDto<HoaDon> responseDto = new HoaDonService(_mapper, _context).CreateHoaDon(
+            addHoaDonDto
+        );
 
-        return Ok(hoaDon);
+        return Ok(responseDto);
     }
 }

@@ -1,6 +1,9 @@
 using AutoMapper;
 using wa.Models;
+using wa.Models.Dtos;
+using wa.Models.Dtos.ChiTietHoaDon;
 using wa.Models.Dtos.HoaDon;
+using wa.Models.Dtos.KhachHang;
 using wa.Services.IServices;
 
 namespace wa.Services;
@@ -16,9 +19,40 @@ public class HoaDonService : IHoaDonService
         _context = context;
     }
 
-    public HoaDon AddHoaDon(AddHoaDonDto addHoaDonDto)
+    public ResponseDto<GetHoaDonDto> CreateHoaDon(CreateHoaDonDto createHoaDonDto)
     {
-        HoaDon hoaDon = _mapper.Map<HoaDon>(addHoaDonDto);
+        if (
+            createHoaDonDto.TenKhachHang == null
+            || createHoaDonDto.SoDienThoai == null
+            || createHoaDonDto.TenHoaDon == null
+            || createHoaDonDto.CreateChiTietHoaDons == null
+        )
+        {
+            return new ResponseDto<GetHoaDonDto>() { status = "error", message = "Not params" };
+        }
+
+        HoaDon hoaDon = _mapper.Map<CreateHoaDonDto, HoaDon>(createHoaDonDto);
+        List<ChiTietHoaDon> chiTietHoaDons = _mapper.Map<
+            List<CreateChiTietHoaDonDto>?,
+            List<ChiTietHoaDon>
+        >(createHoaDonDto.CreateChiTietHoaDons);
+
+        int khachHangId = new KhachHangService(_mapper, _context).GetKhachHangId(
+            new GetKhachHangDto()
+            {
+                HoTen = createHoaDonDto.TenKhachHang,
+                SoDienThoai = createHoaDonDto.SoDienThoai
+            }
+        );
+        if (khachHangId == -1)
+        {
+            return new ResponseDto<GetHoaDonDto>()
+            {
+                status = "error",
+                message = "Không thể tìm kiếm khách hàng id"
+            };
+        }
+        hoaDon.KhachHangId = (int)khachHangId;
 
         int? totalBillInDay = _context
             .HoaDons?.Where(x =>
@@ -30,28 +64,19 @@ public class HoaDonService : IHoaDonService
             .Select(x => new { count = x.Count() })
             .FirstOrDefault()
             ?.count;
-
-        int? khachHangId = _context
-            .KhachHangs?.Where(x => x.HoTen == addHoaDonDto.TenKhachHang)
-            .Select(x => x.KhachHangId)
-            .FirstOrDefault();
-
-        if (khachHangId != null)
-        {
-            hoaDon.KhachHangId = khachHangId.Value;
-        }
-
-        if (totalBillInDay != null)
+        if (totalBillInDay == null)
         {
             hoaDon.MaGiaoDich =
-                DateTime.Now.ToString("yyyymmdd")
-                + "_"
-                + (totalBillInDay + 1).ToString()?.PadLeft(3, '0');
+                DateTime.Now.ToString("yyyyMMdd") + "_" + (0).ToString().PadLeft(3, '0');
         }
+        hoaDon.MaGiaoDich =
+            DateTime.Now.ToString("yyyyMMdd")
+            + "_"
+            + (totalBillInDay + 1).ToString()?.PadLeft(3, '0');
 
         hoaDon.ThoiGianTao = DateTime.Now;
+
         _context.Add(hoaDon);
         _context.SaveChanges();
-        return hoaDon;
     }
 }

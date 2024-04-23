@@ -1,5 +1,5 @@
-using System.Globalization;
 using AutoMapper;
+using wa.Helpers;
 using wa.Models;
 using wa.Models.Dtos.KhachHang;
 
@@ -12,35 +12,13 @@ public class KhachHangProfile : Profile
         CreateMap<CreateKhachHangDto, KhachHang>()
             .ForMember(
                 dest => dest.NgaySinh,
-                source => source.MapFrom(s => stringToDateTime(s.NgaySinh))
+                source => source.MapFrom(s => DateTimeConvert.stringToDateTime(s.NgaySinh))
             );
 
         CreateMap<KhachHang, GetKhachHangDto>()
             .ForMember(
                 dest => dest.NgaySinh,
-                source => source.MapFrom(s => dateTimeToString(s.NgaySinh))
+                source => source.MapFrom(s => DateTimeConvert.dateTimeToString(s.NgaySinh))
             );
-    }
-
-    private DateTime stringToDateTime(string? s)
-    {
-        DateTime dateTime;
-        bool isDateTime = DateTime.TryParseExact(
-            s,
-            "dd/MM/yyyy",
-            CultureInfo.InvariantCulture,
-            DateTimeStyles.None,
-            out dateTime
-        );
-        if (!isDateTime)
-        {
-            return default;
-        }
-        return dateTime;
-    }
-
-    private string dateTimeToString(DateTime dateTime)
-    {
-        return dateTime.ToString("dd/MM/yyyy");
     }
 }

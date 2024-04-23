@@ -29,8 +29,8 @@ public class LoaiSanPhamService : ILoaiSanPhamService
         {
             return new ResponseDto<GetLoaiSanPhamDto>()
             {
-                status = 0,
-                msg = "Loại sản phẩm đã tồn tại"
+                status = "error",
+                message = "Loại sản phẩm đã tồn tại"
             };
         }
 
@@ -47,8 +47,8 @@ public class LoaiSanPhamService : ILoaiSanPhamService
 
         return new ResponseDto<GetLoaiSanPhamDto>()
         {
-            status = 200,
-            msg = "Thêm loại sản phẩm thành công",
+            status = "success",
+            message = "ok",
             items = new List<GetLoaiSanPhamDto>() { getLoaiSanPhamDto }
         };
     }
@@ -69,8 +69,8 @@ public class LoaiSanPhamService : ILoaiSanPhamService
 
         return new ResponseDto<GetLoaiSanPhamDto>()
         {
-            status = 200,
-            msg = "Thành công",
+            status = "success",
+            message = "ok",
             items = loaiSanPhamDtos
         };
     }

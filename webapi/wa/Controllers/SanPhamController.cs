@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using wa.Models;
+using wa.Models.Dtos;
 using wa.Models.Dtos.SanPham;
 using wa.Services;
 
@@ -33,10 +34,11 @@ public class SanPhamController : Controller
             return BadRequest();
         }
 
-        GetSanPhamDto sanPham = new SanPhamService(_mapper, _context).CreateSanPham(
-            createSanPhamDto
-        );
+        ResponseDto<GetSanPhamDto> responseDto = new SanPhamService(
+            _mapper,
+            _context
+        ).CreateSanPham(createSanPhamDto);
 
-        return Ok(sanPham);
+        return Ok(responseDto);
     }
 }
