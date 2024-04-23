@@ -34,7 +34,7 @@ public class SanPhamController : Controller
         }
 
         GetSanPhamDto sanPham = new SanPhamService(_mapper, _context).CreateSanPham(
-                createSanPhamDto
+            createSanPhamDto
         );
 
         return Ok(sanPham);

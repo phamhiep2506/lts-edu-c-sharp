@@ -19,7 +19,8 @@ namespace wa.Migrations
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "SoDienThoai",
@@ -29,7 +30,8 @@ namespace wa.Migrations
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "DonViTinh",
@@ -39,7 +41,8 @@ namespace wa.Migrations
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)",
-                oldNullable: true);
+                oldNullable: true
+            );
         }
 
         /// <inheritdoc />
@@ -51,7 +54,8 @@ namespace wa.Migrations
                 type: "datetime2",
                 nullable: true,
                 oldClrType: typeof(DateTime),
-                oldType: "datetime2");
+                oldType: "datetime2"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "SoDienThoai",
@@ -61,7 +65,8 @@ namespace wa.Migrations
                 oldClrType: typeof(string),
                 oldType: "nvarchar(15)",
                 oldMaxLength: 15,
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "DonViTinh",
@@ -71,7 +76,8 @@ namespace wa.Migrations
                 oldClrType: typeof(string),
                 oldType: "nvarchar(50)",
                 oldMaxLength: 50,
-                oldNullable: true);
+                oldNullable: true
+            );
         }
     }
 }

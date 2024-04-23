@@ -1,5 +1,6 @@
 using AutoMapper;
 using wa.Models;
+using wa.Models.Dtos;
 using wa.Models.Dtos.LoaiSanPham;
 using wa.Services.IServices;
 
@@ -16,7 +17,7 @@ public class LoaiSanPhamService : ILoaiSanPhamService
         _context = context;
     }
 
-    public GetLoaiSanPhamDto CreateLoaiSanPham(CreateLoaiSanPhamDto createLoaiSanPhamDto)
+    public ResponseDto<GetLoaiSanPhamDto> CreateLoaiSanPham(CreateLoaiSanPhamDto createLoaiSanPhamDto)
     {
         bool? isTenLoaiSanPham = _context.LoaiSanPhams?.Any(x =>
             x.TenLoaiSanPham == createLoaiSanPhamDto.TenLoaiSanPham
@@ -24,7 +25,11 @@ public class LoaiSanPhamService : ILoaiSanPhamService
 
         if (isTenLoaiSanPham == true)
         {
-            return new GetLoaiSanPhamDto();
+            return new ResponseDto<GetLoaiSanPhamDto>()
+            {
+                status = 0,
+                msg = "Loại sản phẩm đã tồn tại"
+            };
         }
 
         LoaiSanPham loaiSanPham = _mapper.Map<CreateLoaiSanPhamDto, LoaiSanPham>(
@@ -34,20 +39,28 @@ public class LoaiSanPhamService : ILoaiSanPhamService
         _context.Add(loaiSanPham);
         _context.SaveChanges();
 
-        GetLoaiSanPhamDto getKhachHangDto = _mapper.Map<LoaiSanPham, GetLoaiSanPhamDto>(
+        GetLoaiSanPhamDto getLoaiSanPhamDto = _mapper.Map<LoaiSanPham, GetLoaiSanPhamDto>(
             loaiSanPham
         );
 
-        return getKhachHangDto;
+        return new ResponseDto<GetLoaiSanPhamDto>()
+        {
+            status = 200,
+            msg = "Thêm loại sản phẩm thành công",
+            items = new List<GetLoaiSanPhamDto>() 
+            {
+                getLoaiSanPhamDto
+            }
+        };
     }
 
-    public List<GetLoaiSanPhamDto> GetAllLoaiSanPham()
+    public ResponseDto<GetLoaiSanPhamDto> GetAllLoaiSanPham()
     {
         List<LoaiSanPham>? loaiSanPhams = _context.LoaiSanPhams?.ToList();
 
         if (loaiSanPhams == null)
         {
-            return new List<GetLoaiSanPhamDto>();
+            return new ResponseDto<GetLoaiSanPhamDto>();
         }
 
         List<GetLoaiSanPhamDto> loaiSanPhamDtos = _mapper.Map<
@@ -55,6 +68,11 @@ public class LoaiSanPhamService : ILoaiSanPhamService
             List<GetLoaiSanPhamDto>
         >(loaiSanPhams);
 
-        return loaiSanPhamDtos;
+        return new ResponseDto<GetLoaiSanPhamDto>()
+        {
+            status = 200,
+            msg = "Thành công",
+            items = loaiSanPhamDtos
+        };
     }
 }

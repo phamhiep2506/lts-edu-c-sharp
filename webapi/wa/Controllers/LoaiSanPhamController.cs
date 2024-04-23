@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using wa.Models;
+using wa.Models.Dtos;
 using wa.Models.Dtos.LoaiSanPham;
 using wa.Services;
 
@@ -33,11 +34,11 @@ public class LoaiSanPhamController : Controller
             return BadRequest();
         }
 
-        GetLoaiSanPhamDto LoaiSanPham = new LoaiSanPhamService(_mapper, _context).CreateLoaiSanPham(
+        ResponseDto<GetLoaiSanPhamDto> responseDto = new LoaiSanPhamService(_mapper, _context).CreateLoaiSanPham(
             createLoaiSanPhamDto
         );
 
-        return Ok(LoaiSanPham);
+        return Ok(responseDto);
     }
 
     [HttpGet]
@@ -48,11 +49,11 @@ public class LoaiSanPhamController : Controller
             return BadRequest();
         }
 
-        List<GetLoaiSanPhamDto> getLoaiSanPhamDtos = new LoaiSanPhamService(
+        ResponseDto<GetLoaiSanPhamDto> responseDto = new LoaiSanPhamService(
             _mapper,
             _context
         ).GetAllLoaiSanPham();
 
-        return Ok(getLoaiSanPhamDtos);
+        return Ok(responseDto);
     }
 }

@@ -43,7 +43,10 @@ public class HoaDonService : IHoaDonService
 
         if (totalBillInDay != null)
         {
-            hoaDon.MaGiaoDich = DateTime.Now.ToString("yyyymmdd") + "_" + (totalBillInDay + 1).ToString()?.PadLeft(3, '0');
+            hoaDon.MaGiaoDich =
+                DateTime.Now.ToString("yyyymmdd")
+                + "_"
+                + (totalBillInDay + 1).ToString()?.PadLeft(3, '0');
         }
 
         hoaDon.ThoiGianTao = DateTime.Now;

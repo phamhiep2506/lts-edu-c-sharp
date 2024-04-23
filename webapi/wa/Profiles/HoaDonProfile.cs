@@ -10,6 +10,7 @@ public class HoaDonProfile : Profile
     {
         CreateMap<HoaDon, AddHoaDonDto>()
             .ForMember(dest => dest.TenHoaDon, source => source.MapFrom(s => s.TenHoaDon))
-            .ForMember(dest => dest.GhiChu, source => source.MapFrom(s => s.GhiChu)).ReverseMap();
+            .ForMember(dest => dest.GhiChu, source => source.MapFrom(s => s.GhiChu))
+            .ReverseMap();
     }
 }
