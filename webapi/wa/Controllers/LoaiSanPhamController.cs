@@ -34,9 +34,10 @@ public class LoaiSanPhamController : Controller
             return BadRequest();
         }
 
-        ResponseDto<GetLoaiSanPhamDto> responseDto = new LoaiSanPhamService(_mapper, _context).CreateLoaiSanPham(
-            createLoaiSanPhamDto
-        );
+        ResponseDto<GetLoaiSanPhamDto> responseDto = new LoaiSanPhamService(
+            _mapper,
+            _context
+        ).CreateLoaiSanPham(createLoaiSanPhamDto);
 
         return Ok(responseDto);
     }
@@ -52,7 +53,7 @@ public class LoaiSanPhamController : Controller
         ResponseDto<GetLoaiSanPhamDto> responseDto = new LoaiSanPhamService(
             _mapper,
             _context
-        ).GetAllLoaiSanPham();
+        ).GetLoaiSanPham();
 
         return Ok(responseDto);
     }

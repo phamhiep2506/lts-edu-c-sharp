@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using wa.Models;
+using wa.Models.Dtos;
 using wa.Models.Dtos.KhachHang;
 using wa.Services;
 
@@ -33,10 +34,11 @@ public class KhachHangController : ControllerBase
             return BadRequest();
         }
 
-        GetKhachHangDto khachHang = new KhachHangService(_mapper, _context).CreateKhachHang(
-            createKhachHangDto
-        );
+        ResponseDto<GetKhachHangDto> responseDto = new KhachHangService(
+            _mapper,
+            _context
+        ).CreateKhachHang(createKhachHangDto);
 
-        return Ok(khachHang);
+        return Ok(responseDto);
     }
 }

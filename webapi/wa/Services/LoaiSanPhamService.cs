@@ -17,7 +17,9 @@ public class LoaiSanPhamService : ILoaiSanPhamService
         _context = context;
     }
 
-    public ResponseDto<GetLoaiSanPhamDto> CreateLoaiSanPham(CreateLoaiSanPhamDto createLoaiSanPhamDto)
+    public ResponseDto<GetLoaiSanPhamDto> CreateLoaiSanPham(
+        CreateLoaiSanPhamDto createLoaiSanPhamDto
+    )
     {
         bool? isTenLoaiSanPham = _context.LoaiSanPhams?.Any(x =>
             x.TenLoaiSanPham == createLoaiSanPhamDto.TenLoaiSanPham
@@ -47,14 +49,11 @@ public class LoaiSanPhamService : ILoaiSanPhamService
         {
             status = 200,
             msg = "Thêm loại sản phẩm thành công",
-            items = new List<GetLoaiSanPhamDto>() 
-            {
-                getLoaiSanPhamDto
-            }
+            items = new List<GetLoaiSanPhamDto>() { getLoaiSanPhamDto }
         };
     }
 
-    public ResponseDto<GetLoaiSanPhamDto> GetAllLoaiSanPham()
+    public ResponseDto<GetLoaiSanPhamDto> GetLoaiSanPham()
     {
         List<LoaiSanPham>? loaiSanPhams = _context.LoaiSanPhams?.ToList();
 

@@ -1,5 +1,6 @@
 using AutoMapper;
 using wa.Models;
+using wa.Models.Dtos;
 using wa.Models.Dtos.KhachHang;
 using wa.Services.IServices;
 
@@ -16,8 +17,17 @@ public class KhachHangService : IKhachHangService
         _context = context;
     }
 
-    public GetKhachHangDto CreateKhachHang(CreateKhachHangDto createKhachHangDto)
+    public ResponseDto<GetKhachHangDto> CreateKhachHang(CreateKhachHangDto createKhachHangDto)
     {
+        bool? isHoTen = _context.KhachHangs?.Any(x =>
+            x.HoTen == createKhachHangDto.HoTen && x.SoDienThoai == createKhachHangDto.SoDienThoai
+        );
+
+        if (isHoTen == true)
+        {
+            return new ResponseDto<GetKhachHangDto>() { status = 0, msg = "Khách hàng đã tồn tại" };
+        }
+
         KhachHang khachHang = _mapper.Map<CreateKhachHangDto, KhachHang>(createKhachHangDto);
 
         _context.Add(khachHang);
@@ -25,6 +35,11 @@ public class KhachHangService : IKhachHangService
 
         GetKhachHangDto getKhachHangDto = _mapper.Map<KhachHang, GetKhachHangDto>(khachHang);
 
-        return getKhachHangDto;
+        return new ResponseDto<GetKhachHangDto>()
+        {
+            status = 200,
+            msg = "Thêm khách hàng thành công",
+            items = new List<GetKhachHangDto>() { getKhachHangDto }
+        };
     }
 }

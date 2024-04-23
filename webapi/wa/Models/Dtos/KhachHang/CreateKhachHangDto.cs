@@ -13,7 +13,7 @@ public class CreateKhachHangDto
     [MaxLength(10, ErrorMessage = "Số điện thoại không được dài quá 12 kí tự")]
     [RegularExpression(
         @"(84|0[3|5|7|8|9])+([0-9]{8})",
-        ErrorMessage = "Sô điện thoại không hợp lệ"
+        ErrorMessage = "Số điện thoại không hợp lệ"
     )]
     public string? SoDienThoai { get; set; }
 }

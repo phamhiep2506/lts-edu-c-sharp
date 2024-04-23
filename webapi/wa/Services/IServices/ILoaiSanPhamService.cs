@@ -5,7 +5,9 @@ namespace wa.Services.IServices;
 
 public interface ILoaiSanPhamService
 {
-    public ResponseDto<GetLoaiSanPhamDto> CreateLoaiSanPham(CreateLoaiSanPhamDto createLoaiSanPhamDto);
+    public ResponseDto<GetLoaiSanPhamDto> CreateLoaiSanPham(
+        CreateLoaiSanPhamDto createLoaiSanPhamDto
+    );
 
-    public ResponseDto<GetLoaiSanPhamDto> GetAllLoaiSanPham();
+    public ResponseDto<GetLoaiSanPhamDto> GetLoaiSanPham();
 }
