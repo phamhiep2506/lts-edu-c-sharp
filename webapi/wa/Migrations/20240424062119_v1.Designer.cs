@@ -12,8 +12,8 @@ using wa.Models;
 namespace wa.Migrations
 {
     [DbContext(typeof(CuaHangContext))]
-    [Migration("20240419042243_v3")]
-    partial class v3
+    [Migration("20240424062119_v1")]
+    partial class v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

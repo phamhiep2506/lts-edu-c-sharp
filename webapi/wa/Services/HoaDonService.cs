@@ -25,17 +25,47 @@ public class HoaDonService : IHoaDonService
             createHoaDonDto.TenKhachHang == null
             || createHoaDonDto.SoDienThoai == null
             || createHoaDonDto.TenHoaDon == null
-            || createHoaDonDto.CreateChiTietHoaDons == null
+            || createHoaDonDto.ChiTietHoaDons == null
         )
         {
             return new ResponseDto<GetHoaDonDto>() { status = "error", message = "Not params" };
         }
 
+        foreach (CreateChiTietHoaDonDto createChiTietHoaDonDto in createHoaDonDto.ChiTietHoaDons)
+        {
+            bool? isTenSanPham = _context.SanPhams?.Any(x =>
+                x.TenSanPham == createChiTietHoaDonDto.TenSanPham
+            );
+            if (isTenSanPham == false || isTenSanPham == null)
+            {
+                return new ResponseDto<GetHoaDonDto>()
+                {
+                    status = "error",
+                    message = "Không thể tìm kiếm sản phẩm id"
+                };
+            }
+        }
+
+        foreach (CreateChiTietHoaDonDto createChiTietHoaDonDto in createHoaDonDto.ChiTietHoaDons)
+        {
+            int sanPhamId = new SanPhamService(_mapper, _context).GetSanPhamIdByName(
+                createChiTietHoaDonDto.TenSanPham!
+            );
+            createChiTietHoaDonDto.SanPhamId = sanPhamId;
+        }
+
         HoaDon hoaDon = _mapper.Map<CreateHoaDonDto, HoaDon>(createHoaDonDto);
-        List<ChiTietHoaDon> chiTietHoaDons = _mapper.Map<
-            List<CreateChiTietHoaDonDto>?,
-            List<ChiTietHoaDon>
-        >(createHoaDonDto.CreateChiTietHoaDons);
+
+        foreach (ChiTietHoaDon chiTietHoaDon in hoaDon.ChiTietHoaDons!)
+        {
+            double? giaThanh = _context
+                .SanPhams?.Where(x => x.SanPhamId == chiTietHoaDon.SanPhamId)
+                .Select(x => x.GiaThanh)
+                .FirstOrDefault();
+
+            chiTietHoaDon.ThanhTien = chiTietHoaDon.SoLuong * giaThanh ?? 0;
+        }
+        ;
 
         int khachHangId = new KhachHangService(_mapper, _context).GetKhachHangId(
             new GetKhachHangDto()
@@ -54,6 +84,45 @@ public class HoaDonService : IHoaDonService
         }
         hoaDon.KhachHangId = (int)khachHangId;
 
+        hoaDon.MaGiaoDich = taoMaGiaoDich();
+
+        hoaDon.ThoiGianTao = DateTime.Now;
+
+        double tongTien = 0;
+        foreach (ChiTietHoaDon chiTietHoaDon in hoaDon.ChiTietHoaDons!)
+        {
+            tongTien += chiTietHoaDon.ThanhTien;
+        }
+        hoaDon.TongTien = tongTien;
+
+        _context.Add(hoaDon);
+        _context.SaveChanges();
+
+        GetHoaDonDto getHoaDonDto = _mapper.Map<HoaDon, GetHoaDonDto>(hoaDon);
+        getHoaDonDto.TenKhachHang = createHoaDonDto.TenKhachHang;
+        getHoaDonDto.SoDienThoai = createHoaDonDto.SoDienThoai;
+
+        for (int i = 0; i < createHoaDonDto.ChiTietHoaDons.Count; i++)
+        {
+            if (getHoaDonDto.ChiTietHoaDons == null)
+            {
+                break;
+            }
+            getHoaDonDto.ChiTietHoaDons[i].TenSanPham = createHoaDonDto
+                .ChiTietHoaDons[i]
+                .TenSanPham;
+        }
+
+        return new ResponseDto<GetHoaDonDto>()
+        {
+            status = "success",
+            message = "Thêm hóa đơn thành công",
+            items = new List<GetHoaDonDto>() { getHoaDonDto }
+        };
+    }
+
+    public string taoMaGiaoDich()
+    {
         int? totalBillInDay = _context
             .HoaDons?.Where(x =>
                 x.ThoiGianTao.Year == DateTime.Now.Year
@@ -64,19 +133,14 @@ public class HoaDonService : IHoaDonService
             .Select(x => new { count = x.Count() })
             .FirstOrDefault()
             ?.count;
+
         if (totalBillInDay == null)
         {
-            hoaDon.MaGiaoDich =
-                DateTime.Now.ToString("yyyyMMdd") + "_" + (0).ToString().PadLeft(3, '0');
+            return DateTime.Now.ToString("yyyyMMdd") + "_" + (0).ToString().PadLeft(3, '0');
         }
-        hoaDon.MaGiaoDich =
-            DateTime.Now.ToString("yyyyMMdd")
+
+        return DateTime.Now.ToString("yyyyMMdd")
             + "_"
             + (totalBillInDay + 1).ToString()?.PadLeft(3, '0');
-
-        hoaDon.ThoiGianTao = DateTime.Now;
-
-        _context.Add(hoaDon);
-        _context.SaveChanges();
     }
 }

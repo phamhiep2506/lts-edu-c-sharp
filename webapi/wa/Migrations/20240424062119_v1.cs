@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace wa.Migrations
 {
     /// <inheritdoc />
-    public partial class v0 : Migration
+    public partial class v1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,10 +21,14 @@ namespace wa.Migrations
                     HoTen = table.Column<string>(
                         type: "nvarchar(100)",
                         maxLength: 100,
-                        nullable: false
+                        nullable: true
                     ),
                     NgaySinh = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    SoDienThoai = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    SoDienThoai = table.Column<string>(
+                        type: "nvarchar(15)",
+                        maxLength: 15,
+                        nullable: true
+                    )
                 },
                 constraints: table =>
                 {
@@ -42,7 +46,7 @@ namespace wa.Migrations
                     TenLoaiSanPham = table.Column<string>(
                         type: "nvarchar(100)",
                         maxLength: 100,
-                        nullable: false
+                        nullable: true
                     )
                 },
                 constraints: table =>
@@ -62,21 +66,21 @@ namespace wa.Migrations
                     TenHoaDon = table.Column<string>(
                         type: "nvarchar(100)",
                         maxLength: 100,
-                        nullable: false
+                        nullable: true
                     ),
                     MaGiaoDich = table.Column<string>(
                         type: "nvarchar(100)",
                         maxLength: 100,
-                        nullable: false
+                        nullable: true
                     ),
                     ThoiGianTao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ThoiGianCapNhap = table.Column<DateTime>(type: "datetime2", nullable: true),
                     GhiChu = table.Column<string>(
                         type: "nvarchar(100)",
                         maxLength: 100,
-                        nullable: false
+                        nullable: true
                     ),
-                    TongTien = table.Column<double>(type: "float", nullable: true)
+                    TongTien = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -102,19 +106,19 @@ namespace wa.Migrations
                     TenSanPham = table.Column<string>(
                         type: "nvarchar(100)",
                         maxLength: 100,
-                        nullable: false
+                        nullable: true
                     ),
                     GiaThanh = table.Column<double>(type: "float", nullable: false),
                     MoTa = table.Column<string>(
                         type: "nvarchar(100)",
                         maxLength: 100,
-                        nullable: false
+                        nullable: true
                     ),
-                    NgayHetHan = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    NgayHetHan = table.Column<DateTime>(type: "datetime2", nullable: false),
                     KyHieuSanPham = table.Column<string>(
                         type: "nvarchar(50)",
                         maxLength: 50,
-                        nullable: false
+                        nullable: true
                     )
                 },
                 constraints: table =>
@@ -140,8 +144,12 @@ namespace wa.Migrations
                     HoaDonId = table.Column<int>(type: "int", nullable: false),
                     SanPhamId = table.Column<int>(type: "int", nullable: false),
                     SoLuong = table.Column<int>(type: "int", nullable: false),
-                    DonViTinh = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ThanhTien = table.Column<double>(type: "float", nullable: true)
+                    DonViTinh = table.Column<string>(
+                        type: "nvarchar(50)",
+                        maxLength: 50,
+                        nullable: true
+                    ),
+                    ThanhTien = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {

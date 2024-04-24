@@ -27,10 +27,10 @@ public class HoaDonController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult CreateHoaDon(AddHoaDonDto addHoaDonDto)
+    public IActionResult CreateHoaDon(CreateHoaDonDto createHoaDonDto)
     {
-        ResponseDto<HoaDon> responseDto = new HoaDonService(_mapper, _context).CreateHoaDon(
-            addHoaDonDto
+        ResponseDto<GetHoaDonDto> responseDto = new HoaDonService(_mapper, _context).CreateHoaDon(
+            createHoaDonDto
         );
 
         return Ok(responseDto);

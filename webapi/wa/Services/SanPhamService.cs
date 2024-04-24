@@ -75,4 +75,19 @@ public class SanPhamService : ISanPhamService
             items = new List<GetSanPhamDto>() { getSanPhamDto }
         };
     }
+
+    public int GetSanPhamIdByName(string tenSanPham)
+    {
+        int? sanPhamId = _context
+            .SanPhams?.Where(x => x.TenSanPham == tenSanPham)
+            .Select(x => x.SanPhamId)
+            .FirstOrDefault();
+
+        if (sanPhamId == null)
+        {
+            return -1;
+        }
+
+        return (int)sanPhamId;
+    }
 }

@@ -21,5 +21,5 @@ public class CreateHoaDonDto
     [MaxLength(100, ErrorMessage = "Ghi chú không được dài quá 100 kí tự")]
     public string? GhiChu { get; set; }
 
-    public List<CreateChiTietHoaDonDto>? CreateChiTietHoaDons { get; set; }
+    public List<CreateChiTietHoaDonDto>? ChiTietHoaDons { get; set; }
 }

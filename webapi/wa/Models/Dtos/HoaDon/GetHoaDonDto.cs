@@ -12,5 +12,5 @@ public class GetHoaDonDto
     public string? ThoiGianCapNhat { get; set; }
     public string? GhiChu { get; set; }
     public double TongTien { get; set; }
-    List<GetChiTietHoaDonDto>? GetChiTietHoaDonDtos { get; set; }
+    public List<GetChiTietHoaDonDto>? ChiTietHoaDons { get; set; }
 }
