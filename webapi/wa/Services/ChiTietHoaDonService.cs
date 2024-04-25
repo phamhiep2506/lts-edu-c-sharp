@@ -1,5 +1,6 @@
 using AutoMapper;
 using wa.Models;
+using wa.Models.Dtos;
 using wa.Models.Dtos.ChiTietHoaDon;
 using wa.Services.IServices;
 
@@ -16,8 +17,11 @@ public class ChiTietHoaDonService : IChiTietHoaDonService
         _context = context;
     }
 
-    public ChiTietHoaDon CreateChiTietHoaDon(CreateChiTietHoaDonDto createChiTietHoaDonDto)
+    public ResponseDto<GetChiTietHoaDonDto> CreateChiTietHoaDon(
+        int hoaDonId,
+        List<UpdateChiTietHoaDonDto> updateChiTietHoaDons
+    )
     {
-        return new ChiTietHoaDon();
+        return new ResponseDto<GetChiTietHoaDonDto>();
     }
 }

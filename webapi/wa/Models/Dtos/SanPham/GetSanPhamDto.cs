@@ -2,6 +2,7 @@ namespace wa.Models.Dtos.SanPham;
 
 public class GetSanPhamDto
 {
+    public int SanPhamId { get; set; }
     public string? TenSanPham { get; set; }
     public string? TenLoaiSanPham { get; set; }
     public double GiaThanh { get; set; }

@@ -4,6 +4,7 @@ namespace wa.Models.Dtos.HoaDon;
 
 public class GetHoaDonDto
 {
+    public int HoaDonId { get; set; }
     public string? TenKhachHang { get; set; }
     public string? SoDienThoai { get; set; }
     public string? TenHoaDon { get; set; }
