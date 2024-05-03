@@ -34,16 +34,18 @@ public class LoaiSanPhamService : ILoaiSanPhamService
             };
         }
 
-        LoaiSanPham loaiSanPham = _mapper.Map<CreateLoaiSanPhamDto, LoaiSanPham>(
-            createLoaiSanPhamDto
-        );
+        LoaiSanPham loaiSanPham = _mapper.Map<
+            CreateLoaiSanPhamDto,
+            LoaiSanPham
+        >(createLoaiSanPhamDto);
 
         _context.Add(loaiSanPham);
         _context.SaveChanges();
 
-        GetLoaiSanPhamDto getLoaiSanPhamDto = _mapper.Map<LoaiSanPham, GetLoaiSanPhamDto>(
-            loaiSanPham
-        );
+        GetLoaiSanPhamDto getLoaiSanPhamDto = _mapper.Map<
+            LoaiSanPham,
+            GetLoaiSanPhamDto
+        >(loaiSanPham);
 
         return new ResponseDto<GetLoaiSanPhamDto>()
         {

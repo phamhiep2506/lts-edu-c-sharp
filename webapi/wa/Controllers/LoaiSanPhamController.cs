@@ -27,7 +27,9 @@ public class LoaiSanPhamController : Controller
     }
 
     [HttpPost]
-    public IActionResult CreateLoaiSanPham(CreateLoaiSanPhamDto createLoaiSanPhamDto)
+    public IActionResult CreateLoaiSanPham(
+        CreateLoaiSanPhamDto createLoaiSanPhamDto
+    )
     {
         if (!ModelState.IsValid)
         {

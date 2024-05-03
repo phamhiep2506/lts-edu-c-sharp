@@ -12,13 +12,19 @@ public class KhachHangProfile : Profile
         CreateMap<CreateKhachHangDto, KhachHang>()
             .ForMember(
                 dest => dest.NgaySinh,
-                source => source.MapFrom(s => DateTimeConvert.stringToDateTime(s.NgaySinh))
+                source =>
+                    source.MapFrom(s =>
+                        DateTimeConvert.stringToDateTime(s.NgaySinh)
+                    )
             );
 
         CreateMap<KhachHang, GetKhachHangDto>()
             .ForMember(
                 dest => dest.NgaySinh,
-                source => source.MapFrom(s => DateTimeConvert.dateTimeToString(s.NgaySinh))
+                source =>
+                    source.MapFrom(s =>
+                        DateTimeConvert.dateTimeToString(s.NgaySinh)
+                    )
             );
     }
 }

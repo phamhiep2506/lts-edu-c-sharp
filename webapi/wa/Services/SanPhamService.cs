@@ -17,9 +17,13 @@ public class SanPhamService : ISanPhamService
         _context = context;
     }
 
-    public ResponseDto<GetSanPhamDto> CreateSanPham(CreateSanPhamDto createSanPhamDto)
+    public ResponseDto<GetSanPhamDto> CreateSanPham(
+        CreateSanPhamDto createSanPhamDto
+    )
     {
-        SanPham sanPham = _mapper.Map<CreateSanPhamDto, SanPham>(createSanPhamDto);
+        SanPham sanPham = _mapper.Map<CreateSanPhamDto, SanPham>(
+            createSanPhamDto
+        );
 
         bool? isTenSanPham = _context.SanPhams?.Any(x =>
             x.TenSanPham == createSanPhamDto.TenSanPham
@@ -48,7 +52,9 @@ public class SanPhamService : ISanPhamService
         }
 
         int? loaiSanPhamId = _context
-            .LoaiSanPhams?.Where(x => x.TenLoaiSanPham == createSanPhamDto.TenLoaiSanPham)
+            .LoaiSanPhams?.Where(x =>
+                x.TenLoaiSanPham == createSanPhamDto.TenLoaiSanPham
+            )
             .Select(x => x.LoaiSanPhamId)
             .FirstOrDefault();
 
@@ -65,7 +71,9 @@ public class SanPhamService : ISanPhamService
         _context.Add(sanPham);
         _context.SaveChanges();
 
-        GetSanPhamDto getSanPhamDto = _mapper.Map<SanPham, GetSanPhamDto>(sanPham);
+        GetSanPhamDto getSanPhamDto = _mapper.Map<SanPham, GetSanPhamDto>(
+            sanPham
+        );
         getSanPhamDto.TenLoaiSanPham = createSanPhamDto.TenLoaiSanPham;
 
         return new ResponseDto<GetSanPhamDto>()

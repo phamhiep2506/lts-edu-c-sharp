@@ -19,7 +19,9 @@ public class HoaDonService : IHoaDonService
         _context = context;
     }
 
-    public ResponseDto<GetHoaDonDto> CreateHoaDon(CreateHoaDonDto createHoaDonDto)
+    public ResponseDto<GetHoaDonDto> CreateHoaDon(
+        CreateHoaDonDto createHoaDonDto
+    )
     {
         if (
             createHoaDonDto.TenKhachHang == null
@@ -28,10 +30,16 @@ public class HoaDonService : IHoaDonService
             || createHoaDonDto.ChiTietHoaDons == null
         )
         {
-            return new ResponseDto<GetHoaDonDto>() { status = "error", message = "Not params" };
+            return new ResponseDto<GetHoaDonDto>()
+            {
+                status = "error",
+                message = "Not params"
+            };
         }
 
-        foreach (CreateChiTietHoaDonDto createChiTietHoaDonDto in createHoaDonDto.ChiTietHoaDons)
+        foreach (
+            CreateChiTietHoaDonDto createChiTietHoaDonDto in createHoaDonDto.ChiTietHoaDons
+        )
         {
             bool? isTenSanPham = _context.SanPhams?.Any(x =>
                 x.TenSanPham == createChiTietHoaDonDto.TenSanPham
@@ -46,11 +54,14 @@ public class HoaDonService : IHoaDonService
             }
         }
 
-        foreach (CreateChiTietHoaDonDto createChiTietHoaDonDto in createHoaDonDto.ChiTietHoaDons)
+        foreach (
+            CreateChiTietHoaDonDto createChiTietHoaDonDto in createHoaDonDto.ChiTietHoaDons
+        )
         {
-            int sanPhamId = new SanPhamService(_mapper, _context).GetSanPhamIdByName(
-                createChiTietHoaDonDto.TenSanPham!
-            );
+            int sanPhamId = new SanPhamService(
+                _mapper,
+                _context
+            ).GetSanPhamIdByName(createChiTietHoaDonDto.TenSanPham!);
             createChiTietHoaDonDto.SanPhamId = sanPhamId;
         }
 
@@ -67,7 +78,10 @@ public class HoaDonService : IHoaDonService
         }
         ;
 
-        int khachHangId = new KhachHangService(_mapper, _context).GetKhachHangId(
+        int khachHangId = new KhachHangService(
+            _mapper,
+            _context
+        ).GetKhachHangId(
             new GetKhachHangDto()
             {
                 HoTen = createHoaDonDto.TenKhachHang,
@@ -136,7 +150,9 @@ public class HoaDonService : IHoaDonService
 
         if (totalBillInDay == null)
         {
-            return DateTime.Now.ToString("yyyyMMdd") + "_" + (0).ToString().PadLeft(3, '0');
+            return DateTime.Now.ToString("yyyyMMdd")
+                + "_"
+                + (0).ToString().PadLeft(3, '0');
         }
 
         return DateTime.Now.ToString("yyyyMMdd")

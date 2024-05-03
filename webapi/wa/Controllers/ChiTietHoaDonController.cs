@@ -1,9 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using wa.Models;
-using wa.Models.Dtos;
-using wa.Models.Dtos.ChiTietHoaDon;
-using wa.Services;
 
 namespace wa.Controllers;
 
@@ -24,25 +21,5 @@ public class ChiTietHoaDonController : ControllerBase
         _mapper = mapper;
         _logger = logger;
         _context = context;
-    }
-
-    [HttpPost]
-    [Route("{hoaDonId}")]
-    public IActionResult UpdateChiTietHoaDon(
-        int hoaDonId,
-        List<UpdateChiTietHoaDonDto> updateChiTietHoaDons
-    )
-    {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest();
-        }
-
-        ResponseDto<GetChiTietHoaDonDto> responseDto = new ChiTietHoaDonService(
-            _mapper,
-            _context
-        ).CreateChiTietHoaDon(hoaDonId, updateChiTietHoaDons);
-
-        return Ok(responseDto);
     }
 }

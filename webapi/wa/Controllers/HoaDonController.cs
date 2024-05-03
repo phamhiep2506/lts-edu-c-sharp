@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using wa.Models;
 using wa.Models.Dtos;
+using wa.Models.Dtos.ChiTietHoaDon;
 using wa.Models.Dtos.HoaDon;
 using wa.Services;
 
@@ -34,9 +35,30 @@ public class HoaDonController : ControllerBase
             return BadRequest();
         }
 
-        ResponseDto<GetHoaDonDto> responseDto = new HoaDonService(_mapper, _context).CreateHoaDon(
-            createHoaDonDto
-        );
+        ResponseDto<GetHoaDonDto> responseDto = new HoaDonService(
+            _mapper,
+            _context
+        ).CreateHoaDon(createHoaDonDto);
+
+        return Ok(responseDto);
+    }
+
+    [HttpPost]
+    [Route("{hoaDonId}")]
+    public IActionResult AddChiTietHoaDon(
+        int hoaDonId,
+        List<AddChiTietHoaDonDto> chiTietHoaDons
+    )
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest();
+        }
+
+        ResponseDto<GetHoaDonDto> responseDto = new ChiTietHoaDonService(
+            _mapper,
+            _context
+        ).AddChiTietHoaDon(hoaDonId, chiTietHoaDons);
 
         return Ok(responseDto);
     }

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace wa.Models.Dtos.ChiTietHoaDon;
 
-public class UpdateChiTietHoaDonDto
+public class AddChiTietHoaDonDto
 {
     public int SanPhamId { get; set; }
 

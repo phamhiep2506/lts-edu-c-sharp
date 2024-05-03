@@ -17,10 +17,13 @@ public class KhachHangService : IKhachHangService
         _context = context;
     }
 
-    public ResponseDto<GetKhachHangDto> CreateKhachHang(CreateKhachHangDto createKhachHangDto)
+    public ResponseDto<GetKhachHangDto> CreateKhachHang(
+        CreateKhachHangDto createKhachHangDto
+    )
     {
         bool? isHoTen = _context.KhachHangs?.Any(x =>
-            x.HoTen == createKhachHangDto.HoTen && x.SoDienThoai == createKhachHangDto.SoDienThoai
+            x.HoTen == createKhachHangDto.HoTen
+            && x.SoDienThoai == createKhachHangDto.SoDienThoai
         );
 
         if (isHoTen == true)
@@ -32,12 +35,17 @@ public class KhachHangService : IKhachHangService
             };
         }
 
-        KhachHang khachHang = _mapper.Map<CreateKhachHangDto, KhachHang>(createKhachHangDto);
+        KhachHang khachHang = _mapper.Map<CreateKhachHangDto, KhachHang>(
+            createKhachHangDto
+        );
 
         _context.Add(khachHang);
         _context.SaveChanges();
 
-        GetKhachHangDto getKhachHangDto = _mapper.Map<KhachHang, GetKhachHangDto>(khachHang);
+        GetKhachHangDto getKhachHangDto = _mapper.Map<
+            KhachHang,
+            GetKhachHangDto
+        >(khachHang);
 
         return new ResponseDto<GetKhachHangDto>()
         {
@@ -49,13 +57,17 @@ public class KhachHangService : IKhachHangService
 
     public int GetKhachHangId(GetKhachHangDto getKhachHangDto)
     {
-        if (getKhachHangDto.HoTen == null || getKhachHangDto.SoDienThoai == null)
+        if (
+            getKhachHangDto.HoTen == null
+            || getKhachHangDto.SoDienThoai == null
+        )
         {
             return -1;
         }
 
         bool? isKhachHang = _context.KhachHangs?.Any(x =>
-            x.HoTen == getKhachHangDto.HoTen && x.SoDienThoai == getKhachHangDto.SoDienThoai
+            x.HoTen == getKhachHangDto.HoTen
+            && x.SoDienThoai == getKhachHangDto.SoDienThoai
         );
         if (isKhachHang == false || isKhachHang == null)
         {
@@ -64,7 +76,8 @@ public class KhachHangService : IKhachHangService
 
         int? khachHangId = _context
             .KhachHangs?.Where(x =>
-                x.HoTen == getKhachHangDto.HoTen && x.SoDienThoai == getKhachHangDto.SoDienThoai
+                x.HoTen == getKhachHangDto.HoTen
+                && x.SoDienThoai == getKhachHangDto.SoDienThoai
             )
             .Select(x => x.KhachHangId)
             .FirstOrDefault();

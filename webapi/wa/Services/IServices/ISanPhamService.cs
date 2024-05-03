@@ -6,6 +6,8 @@ namespace wa.Services.IServices;
 
 public interface ISanPhamService
 {
-    public ResponseDto<GetSanPhamDto> CreateSanPham(CreateSanPhamDto createSanPhamDto);
+    public ResponseDto<GetSanPhamDto> CreateSanPham(
+        CreateSanPhamDto createSanPhamDto
+    );
     public int GetSanPhamIdByName(string tenSanPham);
 }

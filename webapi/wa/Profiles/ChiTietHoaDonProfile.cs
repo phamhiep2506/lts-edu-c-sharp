@@ -10,7 +10,6 @@ public class ChiTietHoaDonProfile : Profile
     {
         CreateMap<CreateChiTietHoaDonDto, ChiTietHoaDon>();
         CreateMap<ChiTietHoaDon, GetChiTietHoaDonDto>();
-        /* CreateMap<CreateChiTietHoaDonDto, GetChiTietHoaDonDto>(); */
-        CreateMap<UpdateChiTietHoaDonDto, ChiTietHoaDon>();
+        CreateMap<AddChiTietHoaDonDto, ChiTietHoaDon>();
     }
 }

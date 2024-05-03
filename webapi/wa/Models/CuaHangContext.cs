@@ -19,7 +19,9 @@ public class CuaHangContext : DbContext
         TrustServerCertificate=True;
     ";
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    protected override void OnConfiguring(
+        DbContextOptionsBuilder optionsBuilder
+    )
     {
         base.OnConfiguring(optionsBuilder);
         optionsBuilder.UseSqlServer(connectString);

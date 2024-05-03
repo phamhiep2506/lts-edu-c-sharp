@@ -12,12 +12,18 @@ public class SanPhamProfile : Profile
         CreateMap<CreateSanPhamDto, SanPham>()
             .ForMember(
                 dest => dest.NgayHetHan,
-                source => source.MapFrom(s => DateTimeConvert.stringToDateTime(s.NgayHetHan))
+                source =>
+                    source.MapFrom(s =>
+                        DateTimeConvert.stringToDateTime(s.NgayHetHan)
+                    )
             );
         CreateMap<SanPham, GetSanPhamDto>()
             .ForMember(
                 dest => dest.NgayHetHan,
-                source => source.MapFrom(s => DateTimeConvert.dateTimeToString(s.NgayHetHan))
+                source =>
+                    source.MapFrom(s =>
+                        DateTimeConvert.dateTimeToString(s.NgayHetHan)
+                    )
             );
     }
 }

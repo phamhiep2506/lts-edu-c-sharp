@@ -23,7 +23,10 @@ namespace wa.Migrations
                         maxLength: 100,
                         nullable: true
                     ),
-                    NgaySinh = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NgaySinh = table.Column<DateTime>(
+                        type: "datetime2",
+                        nullable: false
+                    ),
                     SoDienThoai = table.Column<string>(
                         type: "nvarchar(15)",
                         maxLength: 15,
@@ -62,7 +65,10 @@ namespace wa.Migrations
                     HoaDonId = table
                         .Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    KhachHangId = table.Column<int>(type: "int", nullable: false),
+                    KhachHangId = table.Column<int>(
+                        type: "int",
+                        nullable: false
+                    ),
                     TenHoaDon = table.Column<string>(
                         type: "nvarchar(100)",
                         maxLength: 100,
@@ -73,14 +79,23 @@ namespace wa.Migrations
                         maxLength: 100,
                         nullable: true
                     ),
-                    ThoiGianTao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ThoiGianCapNhap = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ThoiGianTao = table.Column<DateTime>(
+                        type: "datetime2",
+                        nullable: false
+                    ),
+                    ThoiGianCapNhap = table.Column<DateTime>(
+                        type: "datetime2",
+                        nullable: true
+                    ),
                     GhiChu = table.Column<string>(
                         type: "nvarchar(100)",
                         maxLength: 100,
                         nullable: true
                     ),
-                    TongTien = table.Column<double>(type: "float", nullable: false)
+                    TongTien = table.Column<double>(
+                        type: "float",
+                        nullable: false
+                    )
                 },
                 constraints: table =>
                 {
@@ -102,19 +117,28 @@ namespace wa.Migrations
                     SanPhamId = table
                         .Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    LoaiSanPhamId = table.Column<int>(type: "int", nullable: false),
+                    LoaiSanPhamId = table.Column<int>(
+                        type: "int",
+                        nullable: false
+                    ),
                     TenSanPham = table.Column<string>(
                         type: "nvarchar(100)",
                         maxLength: 100,
                         nullable: true
                     ),
-                    GiaThanh = table.Column<double>(type: "float", nullable: false),
+                    GiaThanh = table.Column<double>(
+                        type: "float",
+                        nullable: false
+                    ),
                     MoTa = table.Column<string>(
                         type: "nvarchar(100)",
                         maxLength: 100,
                         nullable: true
                     ),
-                    NgayHetHan = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NgayHetHan = table.Column<DateTime>(
+                        type: "datetime2",
+                        nullable: false
+                    ),
                     KyHieuSanPham = table.Column<string>(
                         type: "nvarchar(50)",
                         maxLength: 50,
@@ -149,11 +173,17 @@ namespace wa.Migrations
                         maxLength: 50,
                         nullable: true
                     ),
-                    ThanhTien = table.Column<double>(type: "float", nullable: false)
+                    ThanhTien = table.Column<double>(
+                        type: "float",
+                        nullable: false
+                    )
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ChiTietHoaDons", x => x.ChiTietHoaDonId);
+                    table.PrimaryKey(
+                        "PK_ChiTietHoaDons",
+                        x => x.ChiTietHoaDonId
+                    );
                     table.ForeignKey(
                         name: "FK_ChiTietHoaDons_HoaDons_HoaDonId",
                         column: x => x.HoaDonId,
