@@ -43,8 +43,10 @@ public class ChiTietHoaDonService : IChiTietHoaDonService
                 ChiTietHoaDon
             >(cthd);
             chiTietHoaDon.HoaDonId = hoaDon.HoaDonId;
-            SanPham? sanPham = _context.SanPhams?.Where(x => x.TenSanPham == cthd.TenSanPham).SingleOrDefault();
-            if(sanPham == null)
+            SanPham? sanPham = _context
+                .SanPhams?.Where(x => x.TenSanPham == cthd.TenSanPham)
+                .SingleOrDefault();
+            if (sanPham == null)
             {
                 return;
             }
@@ -54,10 +56,12 @@ public class ChiTietHoaDonService : IChiTietHoaDonService
             _context.SaveChanges();
         });
 
-        List<ChiTietHoaDon> chiTietHoaDons = _context.ChiTietHoaDons!.Where(x => x.HoaDonId == hoaDonId).ToList();
+        List<ChiTietHoaDon> chiTietHoaDons = _context
+            .ChiTietHoaDons!.Where(x => x.HoaDonId == hoaDonId)
+            .ToList();
 
         double tongTien = 0;
-        foreach(ChiTietHoaDon chiTietHoaDon in chiTietHoaDons)
+        foreach (ChiTietHoaDon chiTietHoaDon in chiTietHoaDons)
         {
             tongTien = tongTien + chiTietHoaDon.ThanhTien;
         }
@@ -73,10 +77,18 @@ public class ChiTietHoaDonService : IChiTietHoaDonService
         GetHoaDonDto getHoaDonDto = _mapper.Map<HoaDon, GetHoaDonDto>(hoaDon);
         getHoaDonDto.TenKhachHang = khachHang?.HoTen;
         getHoaDonDto.SoDienThoai = khachHang?.SoDienThoai;
-        getHoaDonDto.ChiTietHoaDons = _mapper.Map<List<ChiTietHoaDon>, List<GetChiTietHoaDonDto>>(chiTietHoaDons);
-        foreach(GetChiTietHoaDonDto chiTietHoaDonDto in getHoaDonDto.ChiTietHoaDons)
+        getHoaDonDto.ChiTietHoaDons = _mapper.Map<
+            List<ChiTietHoaDon>,
+            List<GetChiTietHoaDonDto>
+        >(chiTietHoaDons);
+        foreach (
+            GetChiTietHoaDonDto chiTietHoaDonDto in getHoaDonDto.ChiTietHoaDons
+        )
         {
-            chiTietHoaDonDto.TenSanPham = _context.SanPhams!.Where(x => x.SanPhamId == chiTietHoaDonDto.SanPhamId).Select(x => x.TenSanPham).SingleOrDefault();
+            chiTietHoaDonDto.TenSanPham = _context
+                .SanPhams!.Where(x => x.SanPhamId == chiTietHoaDonDto.SanPhamId)
+                .Select(x => x.TenSanPham)
+                .SingleOrDefault();
         }
 
         return new ResponseDto<GetHoaDonDto>()
