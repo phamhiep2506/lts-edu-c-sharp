@@ -13,11 +13,11 @@ public interface IHoaDonService
 
     public ResponseDto<GetHoaDonDto> GetHoaDonById(int hoaDonId);
 
-    public ResponseDto<GetHoaDonDto> GetHoaDonByDate(int thang, int nam);
+    public ResponseDto<GetHoaDonDto> GetHoaDonByDate(int thang, int nam, int page, int size);
 
-    public ResponseDto<GetHoaDonDto> GetHoaDonByDay(int start, int end);
+    public ResponseDto<GetHoaDonDto> GetHoaDonByDay(int start, int end, int page, int size);
 
-    public ResponseDto<GetHoaDonDto> GetHoaDonByMoney(int start, int end);
+    public ResponseDto<GetHoaDonDto> GetHoaDonByMoney(int start, int end, int page, int size);
 
     public ResponseDto<GetHoaDonDto> GetHoaDonByCode(string code);
 

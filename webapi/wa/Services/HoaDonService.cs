@@ -200,10 +200,13 @@ public class HoaDonService : IHoaDonService
         };
     }
 
-    public ResponseDto<GetHoaDonDto> GetHoaDonByDate(int thang, int nam)
+    public ResponseDto<GetHoaDonDto> GetHoaDonByDate(int thang, int nam, int page, int size)
     {
         List<HoaDon>? hoaDon = _context
-            .HoaDons?.Where(x =>
+            .HoaDons?
+            .Skip((page - 1) * size)
+            .Take(size)
+            .Where(x =>
                 x.ThoiGianTao.Month == thang && x.ThoiGianTao.Year == nam
             )
             .Include(x => x.ChiTietHoaDons)
@@ -231,10 +234,13 @@ public class HoaDonService : IHoaDonService
         };
     }
 
-    public ResponseDto<GetHoaDonDto> GetHoaDonByDay(int start, int end)
+    public ResponseDto<GetHoaDonDto> GetHoaDonByDay(int start, int end, int page, int size)
     {
         List<HoaDon>? hoaDon = _context
-            .HoaDons?.Where(x =>
+            .HoaDons?
+            .Skip((page - 1) * size)
+            .Take(size)
+            .Where(x =>
                 x.ThoiGianTao.Day >= start && x.ThoiGianTao.Day <= end
             )
             .Include(x => x.ChiTietHoaDons)
@@ -262,10 +268,13 @@ public class HoaDonService : IHoaDonService
         };
     }
 
-    public ResponseDto<GetHoaDonDto> GetHoaDonByMoney(int start, int end)
+    public ResponseDto<GetHoaDonDto> GetHoaDonByMoney(int start, int end, int page, int size)
     {
         List<HoaDon>? hoaDon = _context
-            .HoaDons?.Where(x => x.TongTien >= start && x.TongTien <= end)
+            .HoaDons?
+            .Skip((page - 1) * size)
+            .Take(size)
+            .Where(x => x.TongTien >= start && x.TongTien <= end)
             .Include(x => x.ChiTietHoaDons)
             .ToList();
 
