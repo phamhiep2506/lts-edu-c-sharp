@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using wa.Models;
 using wa.Models.Dtos;
 using wa.Models.Dtos.ChiTietHoaDon;
@@ -145,7 +146,7 @@ public class HoaDonService : IHoaDonService
         {
             return new ResponseDto<GetHoaDonDto>()
             {
-                status = "success",
+                status = "error",
                 message = "Xóa chi tiết hóa đơn thất bại",
             };
         }
@@ -158,7 +159,7 @@ public class HoaDonService : IHoaDonService
         {
             return new ResponseDto<GetHoaDonDto>()
             {
-                status = "success",
+                status = "error",
                 message = "Hóa đơn không tồn tại",
             };
         }
@@ -170,6 +171,152 @@ public class HoaDonService : IHoaDonService
         {
             status = "success",
             message = "Xóa hóa đơn thành công",
+        };
+    }
+
+    public ResponseDto<GetHoaDonDto> GetHoaDonById(int hoaDonId)
+    {
+        HoaDon? hoaDon = _context
+            .HoaDons?.Where(x => x.HoaDonId == hoaDonId)
+            .Include(x => x.ChiTietHoaDons)
+            .SingleOrDefault();
+
+        if (hoaDon == null)
+        {
+            return new ResponseDto<GetHoaDonDto>()
+            {
+                status = "error",
+                message = "Hóa đơn không tồn tại",
+            };
+        }
+
+        GetHoaDonDto getHoaDonDto = _mapper.Map<HoaDon, GetHoaDonDto>(hoaDon);
+
+        return new ResponseDto<GetHoaDonDto>()
+        {
+            status = "success",
+            message = "Lấy hóa đơn thành công",
+            items = new List<GetHoaDonDto>() { getHoaDonDto }
+        };
+    }
+
+    public ResponseDto<GetHoaDonDto> GetHoaDonByDate(int thang, int nam)
+    {
+        List<HoaDon>? hoaDon = _context
+            .HoaDons?.Where(x =>
+                x.ThoiGianTao.Month == thang && x.ThoiGianTao.Year == nam
+            )
+            .Include(x => x.ChiTietHoaDons)
+            .ToList();
+
+        if (hoaDon == null)
+        {
+            return new ResponseDto<GetHoaDonDto>()
+            {
+                status = "error",
+                message = "Hóa đơn không tồn tại",
+            };
+        }
+
+        List<GetHoaDonDto> getHoaDonDto = _mapper.Map<
+            List<HoaDon>,
+            List<GetHoaDonDto>
+        >(hoaDon);
+
+        return new ResponseDto<GetHoaDonDto>()
+        {
+            status = "success",
+            message = "Lấy hóa đơn thành công",
+            items = getHoaDonDto
+        };
+    }
+
+    public ResponseDto<GetHoaDonDto> GetHoaDonByDay(int start, int end)
+    {
+        List<HoaDon>? hoaDon = _context
+            .HoaDons?.Where(x =>
+                x.ThoiGianTao.Day >= start && x.ThoiGianTao.Day <= end
+            )
+            .Include(x => x.ChiTietHoaDons)
+            .ToList();
+
+        if (hoaDon == null)
+        {
+            return new ResponseDto<GetHoaDonDto>()
+            {
+                status = "error",
+                message = "Hóa đơn không tồn tại",
+            };
+        }
+
+        List<GetHoaDonDto> getHoaDonDto = _mapper.Map<
+            List<HoaDon>,
+            List<GetHoaDonDto>
+        >(hoaDon);
+
+        return new ResponseDto<GetHoaDonDto>()
+        {
+            status = "success",
+            message = "Lấy hóa đơn thành công",
+            items = getHoaDonDto
+        };
+    }
+
+    public ResponseDto<GetHoaDonDto> GetHoaDonByMoney(int start, int end)
+    {
+        List<HoaDon>? hoaDon = _context
+            .HoaDons?.Where(x => x.TongTien >= start && x.TongTien <= end)
+            .Include(x => x.ChiTietHoaDons)
+            .ToList();
+
+        if (hoaDon == null)
+        {
+            return new ResponseDto<GetHoaDonDto>()
+            {
+                status = "error",
+                message = "Hóa đơn không tồn tại",
+            };
+        }
+
+        List<GetHoaDonDto> getHoaDonDto = _mapper.Map<
+            List<HoaDon>,
+            List<GetHoaDonDto>
+        >(hoaDon);
+
+        return new ResponseDto<GetHoaDonDto>()
+        {
+            status = "success",
+            message = "Lấy hóa đơn thành công",
+            items = getHoaDonDto
+        };
+    }
+
+    public ResponseDto<GetHoaDonDto> GetHoaDonByCode(string code)
+    {
+        List<HoaDon>? hoaDon = _context
+            .HoaDons?.Where(x => x.MaGiaoDich == code)
+            .Include(x => x.ChiTietHoaDons)
+            .ToList();
+
+        if (hoaDon == null)
+        {
+            return new ResponseDto<GetHoaDonDto>()
+            {
+                status = "error",
+                message = "Hóa đơn không tồn tại",
+            };
+        }
+
+        List<GetHoaDonDto> getHoaDonDto = _mapper.Map<
+            List<HoaDon>,
+            List<GetHoaDonDto>
+        >(hoaDon);
+
+        return new ResponseDto<GetHoaDonDto>()
+        {
+            status = "success",
+            message = "Lấy hóa đơn thành công",
+            items = getHoaDonDto
         };
     }
 

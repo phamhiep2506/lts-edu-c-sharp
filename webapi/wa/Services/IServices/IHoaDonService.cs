@@ -11,5 +11,15 @@ public interface IHoaDonService
 
     public ResponseDto<GetHoaDonDto> DeleteHoaDon(int hoaDonId);
 
+    public ResponseDto<GetHoaDonDto> GetHoaDonById(int hoaDonId);
+
+    public ResponseDto<GetHoaDonDto> GetHoaDonByDate(int thang, int nam);
+
+    public ResponseDto<GetHoaDonDto> GetHoaDonByDay(int start, int end);
+
+    public ResponseDto<GetHoaDonDto> GetHoaDonByMoney(int start, int end);
+
+    public ResponseDto<GetHoaDonDto> GetHoaDonByCode(string code);
+
     public string taoMaGiaoDich();
 }

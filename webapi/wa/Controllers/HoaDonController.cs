@@ -94,4 +94,59 @@ public class HoaDonController : ControllerBase
 
         return Ok(responseDto);
     }
+
+    [HttpGet("{hoaDonId}")]
+    public IActionResult GetHoaDonById(int hoaDonId)
+    {
+        ResponseDto<GetHoaDonDto> responseDto = new HoaDonService(
+            _mapper,
+            _context
+        ).GetHoaDonById(hoaDonId);
+
+        return Ok(responseDto);
+    }
+
+    [HttpGet("date")]
+    public IActionResult GetHoaDonByDate(int thang, int nam)
+    {
+        ResponseDto<GetHoaDonDto> responseDto = new HoaDonService(
+            _mapper,
+            _context
+        ).GetHoaDonByDate(thang, nam);
+
+        return Ok(responseDto);
+    }
+
+    [HttpGet("day")]
+    public IActionResult GetHoaDonByDay(int start, int end)
+    {
+        ResponseDto<GetHoaDonDto> responseDto = new HoaDonService(
+            _mapper,
+            _context
+        ).GetHoaDonByDay(start, end);
+
+        return Ok(responseDto);
+    }
+
+    [HttpGet("money")]
+    public IActionResult GetHoaDonByMoney(int start, int end)
+    {
+        ResponseDto<GetHoaDonDto> responseDto = new HoaDonService(
+            _mapper,
+            _context
+        ).GetHoaDonByMoney(start, end);
+
+        return Ok(responseDto);
+    }
+
+    [HttpGet("code/{code}")]
+    public IActionResult GetHoaDonByCode(string code)
+    {
+        ResponseDto<GetHoaDonDto> responseDto = new HoaDonService(
+            _mapper,
+            _context
+        ).GetHoaDonByCode(code);
+
+        return Ok(responseDto);
+    }
 }
