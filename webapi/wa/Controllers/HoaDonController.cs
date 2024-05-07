@@ -62,4 +62,36 @@ public class HoaDonController : ControllerBase
 
         return Ok(responseDto);
     }
+
+    [HttpPatch]
+    [Route("{hoaDonId}")]
+    public IActionResult UpdateChiTietHoaDon(
+        int hoaDonId,
+        UpdateChiTietHoaDonDto updateChiTietHoaDonDto
+    )
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest();
+        }
+
+        ResponseDto<GetHoaDonDto> responseDto = new ChiTietHoaDonService(
+            _mapper,
+            _context
+        ).UpdateChiTietHoaDon(hoaDonId, updateChiTietHoaDonDto);
+
+        return Ok(responseDto);
+    }
+
+    [HttpDelete]
+    [Route("{hoaDonId}")]
+    public IActionResult DeleteHoaDon(int hoaDonId)
+    {
+        ResponseDto<GetHoaDonDto> responseDto = new HoaDonService(
+            _mapper,
+            _context
+        ).DeleteHoaDon(hoaDonId);
+
+        return Ok(responseDto);
+    }
 }

@@ -8,4 +8,8 @@ public interface IHoaDonService
     public ResponseDto<GetHoaDonDto> CreateHoaDon(
         CreateHoaDonDto createHoaDonDto
     );
+
+    public ResponseDto<GetHoaDonDto> DeleteHoaDon(int hoaDonId);
+
+    public string taoMaGiaoDich();
 }

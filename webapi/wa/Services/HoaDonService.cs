@@ -135,6 +135,44 @@ public class HoaDonService : IHoaDonService
         };
     }
 
+    public ResponseDto<GetHoaDonDto> DeleteHoaDon(int hoaDonId)
+    {
+        int status = new ChiTietHoaDonService(
+            _mapper,
+            _context
+        ).DeleteChiTietHoaDon(hoaDonId);
+        if (status < 0)
+        {
+            return new ResponseDto<GetHoaDonDto>()
+            {
+                status = "success",
+                message = "Xóa chi tiết hóa đơn thất bại",
+            };
+        }
+
+        List<HoaDon>? hoaDon = _context
+            .HoaDons?.Where(x => x.HoaDonId == hoaDonId)
+            .ToList();
+
+        if (hoaDon == null)
+        {
+            return new ResponseDto<GetHoaDonDto>()
+            {
+                status = "success",
+                message = "Hóa đơn không tồn tại",
+            };
+        }
+
+        _context.RemoveRange(hoaDon);
+        _context.SaveChanges();
+
+        return new ResponseDto<GetHoaDonDto>()
+        {
+            status = "success",
+            message = "Xóa hóa đơn thành công",
+        };
+    }
+
     public string taoMaGiaoDich()
     {
         int? totalBillInDay = _context

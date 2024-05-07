@@ -11,5 +11,6 @@ public class ChiTietHoaDonProfile : Profile
         CreateMap<CreateChiTietHoaDonDto, ChiTietHoaDon>();
         CreateMap<ChiTietHoaDon, GetChiTietHoaDonDto>();
         CreateMap<AddChiTietHoaDonDto, ChiTietHoaDon>();
+        CreateMap<UpdateChiTietHoaDonDto, ChiTietHoaDon>();
     }
 }

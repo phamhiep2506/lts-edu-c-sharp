@@ -10,4 +10,10 @@ public interface IChiTietHoaDonService
         int hoaDonId,
         List<AddChiTietHoaDonDto> addChiTietHoaDonDtos
     );
+    public ResponseDto<GetHoaDonDto> UpdateChiTietHoaDon(
+        int hoaDonId,
+        UpdateChiTietHoaDonDto updateChiTietHoaDonDto
+    );
+
+    public int DeleteChiTietHoaDon(int hoaDonId);
 }
